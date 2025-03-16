@@ -8,7 +8,7 @@ const exercisesData = {
           title: 'Запросы к REST API',
           description: 'Научитесь отправлять GET и POST запросы к REST API.',
           difficulty: 'Средний',
-          estimatedTime: '40 минут'
+          estimatedTime: '20 минут'
         },
         {
           id: 2,
