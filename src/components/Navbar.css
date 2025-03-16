@@ -1,0 +1,103 @@
+/* src/components/Navbar.css */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 70px;
+  }
+  
+  .navbar-logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #8a4fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-logo:hover {
+    color: #7030e0;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .navbar-item {
+    color: #333333;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-item:hover {
+    color: #8a4fff;
+  }
+  
+  .navbar-auth {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .navbar-button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .login-button {
+    color: #8a4fff;
+    border: 1px solid #8a4fff;
+    background-color: transparent;
+  }
+  
+  .login-button:hover {
+    background-color: #f5f0ff;
+  }
+  
+  .register-button {
+    color: white;
+    background-color: #8a4fff;
+    border: 1px solid #8a4fff;
+  }
+  
+  .register-button:hover {
+    background-color: #7030e0;
+    border-color: #7030e0;
+  }
+  
+  /* Адаптивный дизайн для мобильных устройств */
+  @media (max-width: 768px) {
+    .navbar-container {
+      flex-direction: column;
+      height: auto;
+      padding: 15px;
+    }
+    
+    .navbar-menu {
+      margin: 15px 0;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .navbar-auth {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+  }
