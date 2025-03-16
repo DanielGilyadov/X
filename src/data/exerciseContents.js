@@ -1,5 +1,5 @@
 const exerciseContents = {
-    'fudge': {
+    'Rest': {
         1: {
             title: 'Интеграция REST API с базой данных',
             content: `

@@ -1,5 +1,5 @@
 const exercisesData = {
-    'fudge': {
+    'Rest': {
       title: 'Апишка в Бдэшку',
       description: 'Интеграция REST API с базами данных.',
       exercises: [

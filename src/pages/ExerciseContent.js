@@ -96,7 +96,7 @@ const ExerciseContent = () => {
       />
       
       {/* Поля для API */}
-      {categoryId === "fudge" && (
+      {categoryId === "Rest" && (
         <div className="api-design-section">
           <h4>Проектирование GET-метода</h4>
           <label>Endpoint:</label>

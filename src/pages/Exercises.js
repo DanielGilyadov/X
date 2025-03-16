@@ -5,13 +5,7 @@ import './Pages.css';
 
 const exerciseCategories = [
   {
-    id: 'basic-concepts',
-    title: 'Базовые концепции',
-    description: 'Познакомьтесь с основными принципами системного анализа.',
-    exercises: 3
-  },
-  {
-    id: 'fudge',
+    id: 'Rest',
     title: 'Rest интеграции',
     description: 'Апишка',
     exercises: 5
