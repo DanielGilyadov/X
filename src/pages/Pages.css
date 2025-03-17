@@ -430,3 +430,16 @@
     text-align: center;
   }
 }
+.error-message {
+  background-color: #ffeeee;
+  color: #e53935;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border-left: 4px solid #e53935;
+}
+
+.primary-button:disabled {
+  background-color: #b8a1ff;
+  cursor: not-allowed;
+}
