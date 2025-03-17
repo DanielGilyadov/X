@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Pages.css';
-import { postUser } from '../services/api';
+import { registerUser } from '../services/api';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -45,14 +45,14 @@ const Register = () => {
       setError('');
 
       // Отправка данных на сервер
-      const response = await postUser (
+      const response = await registerUser (
         formData.email,
         formData.name,
         formData.password
       )
 
       // Обработка успешного ответа
-      console.log('Успешная регистрация:', response.data);
+      console.log(response.message);
       
       // После успешной регистрации перенаправляем на страницу входа
       navigate('/login');

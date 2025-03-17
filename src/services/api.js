@@ -15,7 +15,7 @@ const API_REG_USERS = "/api/register";
 //     }
 // };
 
-export const postUser = async (email, name, password) => {
+export const registerUser = async (email, name, password) => {
     try {
         const response = await axios.post(API_REG_USERS, {
             email,

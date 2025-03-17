@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "https://systemanalyst.yoursimulator.ru",
+      target: "https://systemanalyst.yoursimulator.ru/",
       changeOrigin: true,
       secure: false,
       pathRewrite: {
