@@ -8,7 +8,7 @@ const exerciseCategories = [
     id: 'Rest',
     title: 'Rest интеграции',
     description: 'Апишка',
-    exercises: 5
+    exercises: 1
   }
 ];
 
