@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Pages.css';
-import { registerUser } from '../services/api';
+import { registerUser, getEmail } from '../services/api';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   // Обработчик изменения полей формы
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
