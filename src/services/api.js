@@ -1,18 +1,21 @@
 // src/services/api.js
 import axios from "axios";
 
-const API_REG_USERS = "/api/register",
-      API_GET_EMAIL = "/api/check-email";
+const API_REG_USERS = "api/register",
+      API_CHECK_EMAIL = "api/register/check-email";
 
 
-export const getEmail = async () => {
+// Функция для проверки существования email в базе данных
+export const checkEmailExists = async (email) => {
     try {
-        const response = await axios.get(API_GET_EMAIL);
-        console.log(response.data);
-        return response.data; // Возвращаем полученные данные
+        console.log("Проверка email:", email);
+        // Используем GET запрос с параметром email
+        const response = await axios.get(API_CHECK_EMAIL);
+        console.log("Результат проверки email:", response.data);
+        return response.data;
     } catch (error) {
-        console.error("Ошибка при получении данных:", error);
-        return null; // Возвращаем null в случае ошибки
+        console.error("Ошибка при проверке email:", error);
+        throw error; // Пробрасываем ошибку дальше для обработки в компоненте
     }
 };
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Pages.css';
-import { registerUser, getEmail } from '../services/api';
+import { registerUser, checkEmailExists } from '../services/api';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -43,6 +43,9 @@ const Register = () => {
     try {
       setLoading(true);
       setError('');
+
+      const сheck = await checkEmailExists(formData.email)
+      console.log(сheck)
 
       // Отправка данных на сервер
       const response = await registerUser (
