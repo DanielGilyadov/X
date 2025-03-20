@@ -9,12 +9,23 @@ const API_REG_USERS = "api/register",
 export const checkEmailExists = async (email) => {
     try {
         console.log("Проверка email:", email);
-        // Используем GET запрос с параметром email
-        const response = await axios.get(API_CHECK_EMAIL);
+        
+        // Используем объект params для передачи email
+        const response = await axios.get(`${API_CHECK_EMAIL}?email=${encodeURIComponent(email)}`);
+        
+        console.log("Ответ сервера:", response);
         console.log("Результат проверки email:", response.data);
+        
         return response.data;
     } catch (error) {
         console.error("Ошибка при проверке email:", error);
+        console.error("Детали запроса:", error.config);
+        
+        if (error.response) {
+            console.error("Ответ сервера:", error.response.data);
+            console.error("Статус:", error.response.status);
+        }
+        
         throw error; // Пробрасываем ошибку дальше для обработки в компоненте
     }
 };
