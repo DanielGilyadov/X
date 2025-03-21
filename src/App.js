@@ -8,6 +8,7 @@ import ExercisesMenu from './pages/ExercisesMenu';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import './App.css';
+import RestApiSimulator from './components/RestApiSimulator/RestApiSimulator';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/exercises/:categoryId" element={<ExercisesMenu />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/api-simulator/:exerciseId" element={<RestApiSimulator />} /> {/* REST API Симулятор */}
           </Routes>
         </div>
       </div>

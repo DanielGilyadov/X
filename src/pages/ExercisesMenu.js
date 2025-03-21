@@ -1,6 +1,6 @@
 // src/pages/ExercisesMenu.js
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import './Pages.css';
 
 // Фиктивные данные для упражнений (в реальном приложении их можно загружать с сервера)
@@ -11,33 +11,59 @@ const exercisesData = {
       title: 'Введение в REST API',
       description: 'Основные принципы работы с REST API интеграциями.',
       difficulty: 'Легкий',
-      time: '15 мин.'
+      time: '15 мин.',
+      type: 'rest-api'
     },
     {
       id: 'rest-2',
       title: 'Работа с методами HTTP',
       description: 'Изучение HTTP методов GET, POST, PUT, DELETE в REST API.',
       difficulty: 'Средний',
-      time: '25 мин.'
+      time: '25 мин.',
+      type: 'rest-api'
     }
-  ]
+  ],
 };
 
 const ExercisesMenu = () => {
   const { categoryId } = useParams();
+  const navigate = useNavigate(); // Добавляем хук для программной навигации
   
   // Получение списка упражнений для выбранной категории
   const exercises = exercisesData[categoryId] || [];
   
   // Получение названия категории
   const getCategoryTitle = () => {
+    
     switch(categoryId) {
       case 'Rest':
         return 'REST интеграции';
+      case 'Sql':
+        return 'SQL запросы';
+      case 'Requirements':
+        return 'Анализ требований';
       default:
         return 'Упражнения';
     }
   };
+
+  // Функция для обработки клика по кнопке "Начать упражнение"
+  const handleStartExercise = (exercise) => {
+    // В зависимости от типа упражнения перенаправляем на разные страницы
+    if (exercise.type === 'rest-api') {
+      // Для REST API перенаправляем на RestApiSimulator с параметрами
+      navigate(`/api-simulator/${exercise.id}`, { 
+        state: { 
+          exerciseId: exercise.id,
+          exerciseTitle: exercise.title
+        } 
+      });
+    } else {
+      // Для других типов упражнений используем обычный роутинг
+      navigate(`/exercises/${categoryId}/${exercise.id}`);
+    }
+  };
+
 
   return (
     <div className="page">
@@ -60,9 +86,13 @@ const ExercisesMenu = () => {
                 </div>
               </div>
               <p>{exercise.description}</p>
-              <Link to={`/exercises/${categoryId}/${exercise.id}`} className="start-exercise-button">
+              {/* Заменяем Link на button с обработчиком события */}
+              <button 
+                className="start-exercise-button"
+                onClick={() => handleStartExercise(exercise)}
+              >
                 Начать упражнение
-              </Link>
+              </button>
             </div>
           ))
         ) : (
