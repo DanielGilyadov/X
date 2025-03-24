@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Pages.css';
 import { registerUser, checkEmailExists } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   // Обработчик изменения полей формы
   const handleChange = async (e) => {
@@ -44,20 +46,31 @@ const Register = () => {
       setLoading(true);
       setError('');
 
-      const check = await checkEmailExists(formData.email)
-      console.log(check)
+      const check = await checkEmailExists(formData.email);
+      console.log('Результат проверки email:', check);
 
-      let response;
       if(!check.exists){
         // Отправка данных на сервер
-          response = await registerUser (
+        const response = await registerUser(
           formData.email,
           formData.name,
           formData.password
-        )
+        );
 
-        // После успешной регистрации перенаправляем на страницу входа
-        navigate('/login');
+        console.log('Ответ сервера при регистрации:', response);
+
+        // Если после регистрации получен токен, выполняем автологин
+        if (response.token) {
+          login({
+            email: formData.email,
+            name: formData.name,
+            token: response.token
+          });
+          navigate('/'); // Перенаправляем на главную страницу
+        } else {
+          // Если требуется дополнительный вход, перенаправляем на страницу входа
+          navigate('/login');
+        }
       } else {
         setError(check.message);
       }

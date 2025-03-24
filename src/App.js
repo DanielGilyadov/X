@@ -7,26 +7,33 @@ import Exercises from './pages/Exercises';
 import ExercisesMenu from './pages/ExercisesMenu';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
+import Subscription from './pages/Subscription';
 import './App.css';
 import RestApiSimulator from './components/RestApiSimulator/RestApiSimulator';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Navbar />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/exercises" element={<Exercises />} />
-            <Route path="/exercises/:categoryId" element={<ExercisesMenu />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/api-simulator/:exerciseId" element={<RestApiSimulator />} /> {/* REST API Симулятор */}
-          </Routes>
+    <AuthProvider>
+      <Router>
+        <div className="app">
+          <Navbar />
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/exercises" element={<Exercises />} />
+              <Route path="/exercises/:categoryId" element={<ExercisesMenu />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/subscription" element={<Subscription />} />
+              <Route path="/api-simulator/:exerciseId" element={<RestApiSimulator />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
 

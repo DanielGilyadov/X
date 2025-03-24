@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Pages.css';
 import { loginUser } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   // Обработчик изменения полей формы
   const handleChange = (e) => {
@@ -43,13 +45,26 @@ const Login = () => {
         formData.password
       );
 
-      console.log(response)
+      console.log('Ответ сервера:', response);
+
+      // Проверяем, что получили токен
+      if (!response.token) {
+        throw new Error('Токен авторизации не получен');
+      }
+
+      // Сохраняем данные в контексте аутентификации
+      login({
+        email: formData.email,
+        name: response.name || 'Пользователь',
+        token: response.token // Сохраняем полученный токен
+      });
 
       // После успешного входа перенаправляем на домашнюю страницу
       navigate('/');
       
     } catch (err) {
       // Обработка ошибок
+      console.error('Ошибка при входе:', err);
       setError(err.response?.data?.message || 'Произошла ошибка при входе');
     } finally {
       setLoading(false);
