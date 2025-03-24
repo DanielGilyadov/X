@@ -44,21 +44,24 @@ const Register = () => {
       setLoading(true);
       setError('');
 
-      const сheck = await checkEmailExists(formData.email)
-      console.log(сheck)
+      const check = await checkEmailExists(formData.email)
+      console.log(check)
 
-      // Отправка данных на сервер
-      const response = await registerUser (
-        formData.email,
-        formData.name,
-        formData.password
-      )
+      let response;
+      if(!check.exists){
+        // Отправка данных на сервер
+          response = await registerUser (
+          formData.email,
+          formData.name,
+          formData.password
+        )
 
-      // Обработка успешного ответа
-      console.log(response.message);
+        // После успешной регистрации перенаправляем на страницу входа
+        navigate('/login');
+      } else {
+        setError(check.message);
+      }
       
-      // После успешной регистрации перенаправляем на страницу входа
-      navigate('/login');
     } catch (err) {
       // Обработка ошибок
       console.error('Ошибка при регистрации:', err);
