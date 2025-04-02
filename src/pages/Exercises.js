@@ -17,12 +17,15 @@ const Exercises = () => {
 
   const [category, setCategory] = useState([]);
 
-    useEffect(async () => {
-    const response = await getTypeTasks();
-    debugger
-    console.log(response)
-    setCategory(response)
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getTypeTasks();
+      setCategory(response);
+      console.log(response); // Лучше логировать response вместо category
+    };
+    
+    fetchData();
+  }, []);
 
 
   return (
