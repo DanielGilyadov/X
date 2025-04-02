@@ -14,14 +14,6 @@ const exercisesData = {
       time: '15 мин.',
       type: 'rest-api'
     },
-    {
-      id: 'rest-2',
-      title: 'Работа с методами HTTP',
-      description: 'Изучение HTTP методов GET, POST, PUT, DELETE в REST API.',
-      difficulty: 'Средний',
-      time: '25 мин.',
-      type: 'rest-api'
-    }
   ],
 };
 
