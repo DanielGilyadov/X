@@ -29,7 +29,8 @@ api.interceptors.request.use(
 const API_REG_USERS = "/register",
       API_CHECK_EMAIL = `${API_REG_USERS}/check-email`,
       API_LOGIN = "/auth/login",
-      API_GET_TYPE_OF_TASKS='/tasks/tables';
+      API_GET_TYPE_OF_TASKS='/tasks/tables',
+      API_GET__TASKS_FROM_TYPE = '/api/tasks/table/';
 
 // Функция для проверки существования email
 export const checkEmailExists = async (email) => {
@@ -71,13 +72,23 @@ export const loginUser = async (email, password) => {
   }
 };
 
-// Функция для получения всех типо заданий
+// Функция для получения всех типов заданий
 export const getTypeTasks = async () => {
   try {
     const response = await api.get(API_GET_TYPE_OF_TASKS);
     return response.data;
   } catch (error) {
     console.error("Ошибка при проверке email:", error);
+    throw error;
+  }
+};
+
+export const getTablesTasks = async (tableName) => {
+  try {
+    const response = await api.get(`${API_CHECK_EMAIL}${tableName}`);
+    return response.data;
+  } catch (error) {
+    console.error("Ошибка:", error);
     throw error;
   }
 };
