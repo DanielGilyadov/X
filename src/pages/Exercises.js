@@ -1,25 +1,37 @@
 // src/pages/Exercises.jsx
-import React from 'react';
 import { Link } from 'react-router-dom';
 import './Pages.css';
+import { getTypeTasks } from '../services/api';
+import React, { useEffect, useState } from 'react';
 
-const exerciseCategories = [
-  {
-    id: 'Rest',
-    title: 'Rest интеграции',
-    description: 'Апишка',
-    exercises: 1
-  }
-];
+// const exerciseCategories = [
+//   {
+//     id: 'Rest',
+//     title: 'Rest интеграции',
+//     description: 'Апишка',
+//     exercises: 1
+//   }
+// ];
 
 const Exercises = () => {
+
+  const [category, setCategory] = useState([]);
+
+    useEffect(async () => {
+    const response = await getTypeTasks();
+    debugger
+    console.log(response)
+    setCategory(response)
+    }, []);
+
+
   return (
     <div className="page">
       <h1>Упражнения</h1>
       <p>Выберите категорию упражнений по системному анализу, чтобы начать обучение.</p>
       
       <div className="exercises-list">
-        {exerciseCategories.map((category) => (
+        {category.map((category) => (
           <Link 
             to={`/exercises/${category.id}`} 
             key={category.id} 
