@@ -26,6 +26,7 @@ const exercisesData = {
 };
 
 const ExercisesMenu = () => {
+  debugger
   const { categoryId } = useParams();
   const navigate = useNavigate(); // Добавляем хук для программной навигации
   

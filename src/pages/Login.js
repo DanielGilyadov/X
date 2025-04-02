@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Pages.css';
 import { loginUser } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import Spinner from '../components/common/Spinner';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ const Login = () => {
     password: ''
   });
   
-  const [loading, setLoading] = useState(false);
+  const [localLoading, setLocalLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -36,14 +37,11 @@ const Login = () => {
     }
 
     try {
-      setLoading(true);
+      setLocalLoading(true);
       setError('');
 
-      // Отправка данных на сервер
-      const response = await loginUser(
-        formData.email,
-        formData.password
-      );
+      // Отправка данных на сервер без глобального спиннера
+      const response = await loginUser(formData.email, formData.password);
 
       console.log('Ответ сервера:', response);
 
@@ -67,7 +65,7 @@ const Login = () => {
       console.error('Ошибка при входе:', err);
       setError(err.response?.data?.message || 'Произошла ошибка при входе');
     } finally {
-      setLoading(false);
+      setLocalLoading(false);
     }
   };
 
@@ -100,9 +98,14 @@ const Login = () => {
           <button 
             type="submit" 
             className="primary-button full-width"
-            disabled={loading}
+            disabled={localLoading}
           >
-            {loading ? 'Вход...' : 'Войти'}
+            {localLoading ? (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Spinner size="small" text="" />
+                <span style={{ marginLeft: '10px' }}>Вход...</span>
+              </div>
+            ) : 'Войти'}
           </button>
         </form>
         <div className="auth-footer">

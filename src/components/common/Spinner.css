@@ -1,0 +1,79 @@
+/* src/components/common/Spinner.css */
+.spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Основной элемент спиннера - круг */
+  .spinner-circle {
+    border: 3px solid rgba(138, 79, 255, 0.2);
+    border-top: 3px solid #8a4fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Размеры спиннера */
+  .spinner-small .spinner-circle {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .spinner-medium .spinner-circle {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .spinner-large .spinner-circle {
+    width: 60px;
+    height: 60px;
+  }
+  
+  /* Текст под спиннером */
+  .spinner-text {
+    margin-top: 10px;
+    color: #8a4fff;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .spinner-small .spinner-text {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+  
+  .spinner-large .spinner-text {
+    font-size: 16px;
+    margin-top: 12px;
+  }
+  
+  /* Оверлей для отображения спиннера поверх контента */
+  .spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Анимация вращения */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Анимация появления спиннера */
+  .spinner, .spinner-overlay {
+    animation: fade-in 0.3s ease-in-out;
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

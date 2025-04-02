@@ -12,27 +12,30 @@ import Subscription from './pages/Subscription';
 import './App.css';
 import RestApiSimulator from './components/RestApiSimulator/RestApiSimulator';
 import { AuthProvider } from './context/AuthContext';
+import { SpinnerProvider } from './context/SpinnerContext';
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="app">
-          <Navbar />
-          <div className="content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/exercises" element={<Exercises />} />
-              <Route path="/exercises/:categoryId" element={<ExercisesMenu />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/subscription" element={<Subscription />} />
-              <Route path="/api-simulator/:exerciseId" element={<RestApiSimulator />} />
-            </Routes>
+      <SpinnerProvider>
+        <Router>
+          <div className="app">
+            <Navbar />
+            <div className="content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/exercises" element={<Exercises />} />
+                <Route path="/exercises/:categoryId" element={<ExercisesMenu />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/subscription" element={<Subscription />} />
+                <Route path="/api-simulator/:exerciseId" element={<RestApiSimulator />} />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </SpinnerProvider>
     </AuthProvider>
   );
 }
