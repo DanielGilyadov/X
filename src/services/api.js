@@ -30,7 +30,7 @@ const API_REG_USERS = "/register",
       API_CHECK_EMAIL = `${API_REG_USERS}/check-email`,
       API_LOGIN = "/auth/login",
       API_GET_TYPE_OF_TASKS='/tasks/tables',
-      API_GET__TASKS_FROM_TYPE = '/api/tasks/table/';
+      API_GET__TASKS_FROM_TYPE = '/tasks/table/';
 
 // Функция для проверки существования email
 export const checkEmailExists = async (email) => {
@@ -83,12 +83,14 @@ export const getTypeTasks = async () => {
   }
 };
 
-export const getTablesTasks = async (tableName) => {
+export const getTablesTasks = async (categoryType) => {
   try {
-    const response = await api.get(`${API_CHECK_EMAIL}${tableName}`);
+    // Используем правильный путь API с параметром типа категории
+    const response = await api.get(`${API_GET__TASKS_FROM_TYPE}${categoryType}`);
     return response.data;
+    
   } catch (error) {
-    console.error("Ошибка:", error);
+    console.error(`Ошибка при получении упражнений для типа ${categoryType}:`, error);
     throw error;
   }
 };

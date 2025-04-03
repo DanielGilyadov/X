@@ -57,8 +57,8 @@ const Exercises = () => {
         {category.length > 0 ? (
           category.map((category) => (
             <Link 
-              to={`/exercises/${category.id}`} 
-              key={category.id} 
+              to={`/exercises/${category.type}`} 
+              key={category.type} 
               className="exercise-card-link"
             >
               <div className="exercise-card">

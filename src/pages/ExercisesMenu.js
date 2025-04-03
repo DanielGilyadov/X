@@ -1,44 +1,72 @@
 // src/pages/ExercisesMenu.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import './Pages.css';
-
-// Фиктивные данные для упражнений (в реальном приложении их можно загружать с сервера)
-const exercisesData = {
-  'Rest': [
-    {
-      id: 'rest-1',
-      title: 'Введение в REST API',
-      description: 'Основные принципы работы с REST API интеграциями.',
-      difficulty: 'Легкий',
-      time: '15 мин.',
-      type: 'rest-api'
-    },
-  ],
-};
+import { getTablesTasks } from '../services/api';
+import Spinner from '../components/common/Spinner';
 
 const ExercisesMenu = () => {
-  debugger
   const { categoryId } = useParams();
-  const navigate = useNavigate(); // Добавляем хук для программной навигации
-  
-  // Получение списка упражнений для выбранной категории
-  const exercises = exercisesData[categoryId] || [];
+  const navigate = useNavigate();
+  const [exercises, setExercises] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   // Получение названия категории
   const getCategoryTitle = () => {
-    
     switch(categoryId) {
-      case 'Rest':
+      case 'rests':
         return 'REST интеграции';
-      case 'Sql':
+      case "messageBrockers":
         return 'SQL запросы';
-      case 'Requirements':
+      case "demands":
         return 'Анализ требований';
       default:
         return 'Упражнения';
     }
   };
+
+  // Словарь для определения сложности
+  const getDifficultyText = (level) => {
+    const difficultyMap = {
+      1: 'Легкий',
+      2: 'Средний',
+      3: 'Сложный'
+    };
+    return difficultyMap[level] || 'Средний';
+  };
+
+  // Загрузка упражнений для выбранной категории при монтировании компонента
+  useEffect(() => {
+    const fetchExercises = async () => {
+      try {
+        setLoading(true);
+        // Вызываем API для получения списка упражнений для категории
+        const response = await getTablesTasks(categoryId);
+        console.log(response)
+        
+        // Преобразуем данные в нужный формат в соответствии с фактической структурой API
+        const formattedExercises = Array.isArray(response) ? response.map(item => ({
+          id: item.id,
+          title: item.taskName,
+          description: item.taskDescription,
+          difficulty: getDifficultyText(item.taskDifficulty),
+          type: 'rest-api' // Предполагаем тип по умолчанию для всех упражнений
+        })) : [];
+        
+        setExercises(formattedExercises);
+        setError(null);
+      } catch (err) {
+        console.error('Ошибка при загрузке упражнений:', err);
+        setError('Не удалось загрузить упражнения. Пожалуйста, попробуйте позже.');
+        setExercises([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchExercises();
+  }, [categoryId]);
 
   // Функция для обработки клика по кнопке "Начать упражнение"
   const handleStartExercise = (exercise) => {
@@ -57,6 +85,14 @@ const ExercisesMenu = () => {
     }
   };
 
+  // Отображаем спиннер во время загрузки
+  if (loading) {
+    return (
+      <div className="page" style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
+        <Spinner size="large" text="Загрузка упражнений..." />
+      </div>
+    );
+  }
 
   return (
     <div className="page">
@@ -66,6 +102,8 @@ const ExercisesMenu = () => {
       
       <h1>{getCategoryTitle()}</h1>
       <p>Выберите упражнение, чтобы начать обучение.</p>
+      
+      {error && <div className="error-message">{error}</div>}
       
       <div className="exercises-container grid-layout">
         {exercises.length > 0 ? (
@@ -79,7 +117,6 @@ const ExercisesMenu = () => {
                 </div>
               </div>
               <p>{exercise.description}</p>
-              {/* Заменяем Link на button с обработчиком события */}
               <button 
                 className="start-exercise-button"
                 onClick={() => handleStartExercise(exercise)}
