@@ -144,13 +144,11 @@
     text-decoration: underline;
   }
 
-  /* Добавьте эти стили в src/pages/Pages.css */
-
 
   
 
 /* Стили для карточек упражнений */
-.exercise-card-link {
+/* .exercise-card-link {
   text-decoration: none;
   color: inherit;
   display: block;
@@ -193,7 +191,7 @@
 .exercise-arrow {
   font-size: 18px;
   color: #8a4fff;
-}
+} */
 
 /* Стили для навигации по страницам */
 .breadcrumbs {

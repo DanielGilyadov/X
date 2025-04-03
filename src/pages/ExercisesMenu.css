@@ -1,0 +1,308 @@
+/* Обновленные стили для страницы ExercisesMenu */
+.page-exercises-menu {
+    padding: 30px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .exercises-menu-header {
+    margin-bottom: 40px;
+    position: relative;
+  }
+  
+  .exercises-menu-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .exercises-menu-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #8a4fff 0%, #7030e0 100%);
+    border-radius: 2px;
+  }
+  
+  .exercises-menu-description {
+    color: #555;
+    font-size: 17px;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  
+  /* Улучшенные хлебные крошки */
+  .breadcrumbs {
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: #777;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .breadcrumbs a {
+    color: #8a4fff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .breadcrumbs a:hover {
+    color: #7030e0;
+  }
+  
+  .breadcrumbs a:not(:last-child)::after {
+    content: "/";
+    margin: 0 8px;
+    color: #ccc;
+  }
+  
+  /* Обновленная сетка упражнений */
+  .exercises-container.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+  }
+  
+  .exercise-item {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(138, 79, 255, 0.08);
+    padding: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Декоративный элемент в углу карточки */
+  .exercise-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, transparent 50%, rgba(138, 79, 255, 0.08) 50%);
+    border-radius: 0 12px 0 0;
+    transition: all 0.3s ease;
+  }
+  
+  .exercise-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(138, 79, 255, 0.15);
+    border-color: rgba(138, 79, 255, 0.2);
+    /* Удалены зависимости от уголка */
+  }
+  
+  .exercise-item:hover::before {
+    background: linear-gradient(135deg, transparent 50%, rgba(138, 79, 255, 0.15) 50%);
+  }
+  
+  .exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  
+  .exercise-header h3 {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    padding-right: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .exercise-item:hover .exercise-header h3 {
+    color: #8a4fff;
+  }
+  
+  /* Стилизованные индикаторы сложности */
+  .exercise-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  
+  .difficulty-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .difficulty-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ddd;
+  }
+  
+  /* Цвета для индикаторов сложности */
+  .difficulty-1 .dot-1 {
+    background-color: #4CAF50; /* Зеленый для легкого уровня */
+  }
+  
+  .difficulty-2 .dot-1 {
+    background-color: #4CAF50; /* Зеленый */
+  }
+  
+  .difficulty-2 .dot-2 {
+    background-color: #FFC107; /* Желтый для среднего уровня */
+  }
+  
+  .difficulty-3 .dot-1 {
+    background-color: #4CAF50; /* Зеленый */
+  }
+  
+  .difficulty-3 .dot-2 {
+    background-color: #FFC107; /* Желтый */
+  }
+  
+  .difficulty-3 .dot-3 {
+    background-color: #F44336; /* Красный для сложного уровня */
+  }
+  
+  .difficulty-text {
+    font-size: 13px;
+    color: #777;
+    margin-left: 5px;
+    white-space: nowrap;
+  }
+  
+  .exercise-item p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  
+  .start-exercise-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f5f0ff;
+    color: #8a4fff;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+  
+  .start-exercise-button:hover {
+    background-color: #8a4fff;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(138, 79, 255, 0.3);
+  }
+  
+  /* Анимированный градиентный индикатор загрузки */
+  .loading-indicator {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #f5f0ff, #8a4fff, #f5f0ff);
+    background-size: 200% 200%;
+    animation: gradient-animation 1.5s ease infinite;
+    border-radius: 3px;
+    margin-bottom: 30px;
+  }
+  
+  @keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Стилизованное сообщение об ошибке */
+  .error-message {
+    background-color: #fff5f5;
+    color: #e53935;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #e53935;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(229, 57, 53, 0.1);
+  }
+  
+  .error-message::before {
+    content: "!";
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    background-color: #e53935;
+    color: white;
+    border-radius: 50%;
+    margin-right: 12px;
+    font-weight: bold;
+  }
+  
+  /* Состояние при отсутствии упражнений */
+  .no-exercises {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .no-exercises-icon {
+    font-size: 48px;
+    color: #8a4fff;
+    margin-bottom: 20px;
+    opacity: 0.6;
+  }
+  
+  .no-exercises-message {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  /* Адаптивный дизайн */
+  @media (max-width: 768px) {
+    .exercises-container.grid-layout {
+      grid-template-columns: 1fr;
+    }
+    
+    .exercises-menu-header {
+      padding: 0 15px;
+    }
+    
+    .exercises-menu-title {
+      font-size: 28px;
+    }
+    
+    .exercises-menu-description {
+      font-size: 16px;
+    }
+    
+    .exercise-header {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .exercise-meta {
+      align-self: flex-start;
+    }
+  }

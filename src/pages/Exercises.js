@@ -1,61 +1,64 @@
-// src/pages/Exercises.jsx
+// src/pages/Exercises.jsx - обновленная версия
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Pages.css';
+import './ExercisesPage.css'; // Подключаем новый CSS файл
 import { getTypeTasks } from '../services/api';
 import Spinner from '../components/common/Spinner';
 
 const Exercises = () => {
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
-  const [localLoading, setLocalLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLocalLoading(true);
-        // Используем просто API-запрос без глобального спиннера
+        setIsLoading(true);
+        // Используем API-запрос
         const response = await getTypeTasks();
-        setCategory(response);
+        setCategories(response);
         console.log('Получены данные категорий:', response);
       } catch (err) {
-        // console.error('Ошибка при загрузке категорий:', err);
+        console.error('Ошибка при загрузке категорий:', err);
         setError('Не удалось загрузить категории упражнений. Пожалуйста, попробуйте позже.');
       } finally {
-        setLocalLoading(false);
+        setIsLoading(false);
+        setIsInitialLoad(false);
       }
     };
     
     fetchData();
   }, []);
 
-  // Если данные еще загружаются, показываем локальный спиннер для этого компонента
-  if (localLoading && category.length === 0) {
+  // Отображение индикатора загрузки при первичной загрузке
+  if (isInitialLoad) {
     return (
-      <div className="page" style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
+      <div className="page page-exercises" style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
         <Spinner size="large" text="Загрузка категорий..." />
       </div>
     );
   }
 
-  // Если произошла ошибка, показываем сообщение об ошибке
-  if (error) {
-    return (
-      <div className="page">
-        <h1>Упражнения</h1>
-        <div className="error-message">{error}</div>
-      </div>
-    );
-  }
-
   return (
-    <div className="page">
-      <h1>Упражнения</h1>
-      <p>Выберите категорию упражнений по системному анализу, чтобы начать обучение.</p>
+    <div className="page page-exercises">
+      <div className="exercises-header">
+        <h1 className="exercises-title">Упражнения</h1>
+        <p className="exercises-description">
+          Выберите категорию упражнений по системному анализу, чтобы начать обучение и 
+          развить профессиональные навыки в области работы с данными и API.
+        </p>
+        
+        {isLoading && <div className="loading-indicator"></div>}
+      </div>
+      
+      {/* Показываем сообщение об ошибке, если она есть */}
+      {error && <div className="error-message">{error}</div>}
       
       <div className="exercises-list">
-        {category.length > 0 ? (
-          category.map((category) => (
+        {categories.length > 0 ? (
+          categories.map((category) => (
             <Link 
               to={`/exercises/${category.type}`} 
               key={category.type} 
@@ -63,16 +66,22 @@ const Exercises = () => {
             >
               <div className="exercise-card">
                 <h3>{category.title}</h3>
-                <p>{category.description}</p>
+                <p>{category.description || 'Практические упражнения для развития навыков системного анализа и работы с интеграциями.'}</p>
                 <div className="exercise-card-footer">
-                  <span className="exercise-count">{category.exercises} упражнений</span>
+                  <span className="exercise-count">{category.exercises || 'Набор'} упражнений</span>
                   <span className="exercise-arrow">→</span>
                 </div>
               </div>
             </Link>
           ))
-        ) : (
-          <p>Нет доступных категорий упражнений.</p>
+        ) : !isLoading && (
+          <div className="no-exercises">
+            <div className="no-exercises-icon">📚</div>
+            <p className="no-exercises-message">Нет доступных категорий упражнений.</p>
+            <button className="primary-button" onClick={() => window.location.reload()}>
+              Обновить страницу
+            </button>
+          </div>
         )}
       </div>
     </div>

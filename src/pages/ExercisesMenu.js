@@ -1,7 +1,8 @@
-// src/pages/ExercisesMenu.js
+// src/pages/ExercisesMenu.jsx - обновленная версия
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import './Pages.css';
+import './ExercisesMenu.css'; // Подключаем новый CSS файл
 import { getTablesTasks } from '../services/api';
 import Spinner from '../components/common/Spinner';
 
@@ -36,6 +37,18 @@ const ExercisesMenu = () => {
     return difficultyMap[level] || 'Средний';
   };
 
+  // Компонент индикатора сложности с цветными кружочками
+  const DifficultyIndicator = ({ level }) => {
+    return (
+      <div className={`difficulty-indicator difficulty-${level}`}>
+        <div className="difficulty-dot dot-1"></div>
+        <div className="difficulty-dot dot-2"></div>
+        <div className="difficulty-dot dot-3"></div>
+        <span className="difficulty-text">{getDifficultyText(level)}</span>
+      </div>
+    );
+  };
+
   // Загрузка упражнений для выбранной категории при монтировании компонента
   useEffect(() => {
     const fetchExercises = async () => {
@@ -43,14 +56,14 @@ const ExercisesMenu = () => {
         setLoading(true);
         // Вызываем API для получения списка упражнений для категории
         const response = await getTablesTasks(categoryId);
-        console.log(response)
+        console.log(response);
         
         // Преобразуем данные в нужный формат в соответствии с фактической структурой API
         const formattedExercises = Array.isArray(response) ? response.map(item => ({
           id: item.id,
           title: item.taskName,
           description: item.taskDescription,
-          difficulty: getDifficultyText(item.taskDifficulty),
+          difficulty: item.taskDifficulty || 2,
           type: 'rest-api' // Предполагаем тип по умолчанию для всех упражнений
         })) : [];
         
@@ -88,20 +101,25 @@ const ExercisesMenu = () => {
   // Отображаем спиннер во время загрузки
   if (loading) {
     return (
-      <div className="page" style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
+      <div className="page page-exercises-menu" style={{ display: 'flex', justifyContent: 'center', paddingTop: '50px' }}>
         <Spinner size="large" text="Загрузка упражнений..." />
       </div>
     );
   }
 
   return (
-    <div className="page">
+    <div className="page page-exercises-menu">
       <div className="breadcrumbs">
-        <Link to="/exercises">Упражнения</Link> / {getCategoryTitle()}
+        <Link to="/exercises">Упражнения</Link>
+        <span>{getCategoryTitle()}</span>
       </div>
       
-      <h1>{getCategoryTitle()}</h1>
-      <p>Выберите упражнение, чтобы начать обучение.</p>
+      <div className="exercises-menu-header">
+        <h1 className="exercises-menu-title">{getCategoryTitle()}</h1>
+        <p className="exercises-menu-description">
+          Выберите упражнение из категории {getCategoryTitle().toLowerCase()}, чтобы начать обучение и применить знания на практике.
+        </p>
+      </div>
       
       {error && <div className="error-message">{error}</div>}
       
@@ -111,12 +129,9 @@ const ExercisesMenu = () => {
             <div key={exercise.id} className="exercise-item">
               <div className="exercise-header">
                 <h3>{exercise.title}</h3>
-                <div className="exercise-meta">
-                  <span className="difficulty">{exercise.difficulty}</span>
-                  <span className="time">{exercise.time}</span>
-                </div>
+                <DifficultyIndicator level={exercise.difficulty} />
               </div>
-              <p>{exercise.description}</p>
+              <p>{exercise.description || 'В этом упражнении вы сможете применить знания на практике и развить навыки решения задач.'}</p>
               <button 
                 className="start-exercise-button"
                 onClick={() => handleStartExercise(exercise)}
@@ -126,8 +141,14 @@ const ExercisesMenu = () => {
             </div>
           ))
         ) : (
-          <div className="error-message">
-            Упражнения для данной категории не найдены.
+          <div className="no-exercises">
+            <div className="no-exercises-icon">📋</div>
+            <div className="no-exercises-message">
+              Упражнения для данной категории не найдены.
+            </div>
+            <button className="primary-button" onClick={() => navigate('/exercises')}>
+              Вернуться к категориям
+            </button>
           </div>
         )}
       </div>

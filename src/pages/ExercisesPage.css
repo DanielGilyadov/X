@@ -1,0 +1,237 @@
+/* Обновленные стили для страницы упражнений */
+.page-exercises {
+    padding: 30px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .exercises-header {
+    margin-bottom: 40px;
+    position: relative;
+  }
+  
+  .exercises-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .exercises-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #8a4fff 0%, #7030e0 100%);
+    border-radius: 2px;
+  }
+  
+  .exercises-description {
+    color: #555;
+    font-size: 17px;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  
+  /* Обновленная сетка упражнений */
+  .exercises-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+  }
+  
+  .exercise-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+  
+  .exercise-card-link:hover {
+    transform: translateY(-5px);
+  }
+  
+  .exercise-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(138, 79, 255, 0.08);
+    padding: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Декоративный элемент в углу карточки */
+  .exercise-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, transparent 50%, rgba(138, 79, 255, 0.08) 50%);
+    border-radius: 0 12px 0 0;
+    transition: all 0.3s ease;
+  }
+  
+  .exercise-card:hover {
+    box-shadow: 0 10px 30px rgba(138, 79, 255, 0.15);
+    border-color: rgba(138, 79, 255, 0.2);
+  }
+  
+  .exercise-card:hover::before {
+    background: linear-gradient(135deg, transparent 50%, rgba(138, 79, 255, 0.15) 50%);
+  }
+  
+  .exercise-card h3 {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+  }
+  
+  .exercise-card-link:hover .exercise-card h3 {
+    color: #8a4fff;
+  }
+  
+  .exercise-card p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  
+  .exercise-card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+  }
+  
+  .exercise-count {
+    font-size: 14px;
+    color: #777;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .exercise-count::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #8a4fff;
+    border-radius: 50%;
+    margin-right: 8px;
+    opacity: 0.6;
+  }
+  
+  .exercise-arrow {
+    font-size: 22px;
+    color: #8a4fff;
+    transition: transform 0.3s ease;
+  }
+  
+  .exercise-card-link:hover .exercise-arrow {
+    transform: translateX(5px);
+  }
+  
+  /* Анимированный градиентный индикатор загрузки */
+  .loading-indicator {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #f5f0ff, #8a4fff, #f5f0ff);
+    background-size: 200% 200%;
+    animation: gradient-animation 1.5s ease infinite;
+    border-radius: 3px;
+    margin-bottom: 30px;
+  }
+  
+  @keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Стилизованное сообщение об ошибке */
+  .error-message {
+    background-color: #fff5f5;
+    color: #e53935;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #e53935;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(229, 57, 53, 0.1);
+  }
+  
+  .error-message::before {
+    content: "!";
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    background-color: #e53935;
+    color: white;
+    border-radius: 50%;
+    margin-right: 12px;
+    font-weight: bold;
+  }
+  
+  /* Состояние при отсутствии упражнений */
+  .no-exercises {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .no-exercises-icon {
+    font-size: 48px;
+    color: #8a4fff;
+    margin-bottom: 20px;
+    opacity: 0.6;
+  }
+  
+  .no-exercises-message {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  /* Адаптивный дизайн */
+  @media (max-width: 768px) {
+    .exercises-list {
+      grid-template-columns: 1fr;
+    }
+    
+    .exercises-header {
+      padding: 0 15px;
+    }
+    
+    .exercises-title {
+      font-size: 28px;
+    }
+    
+    .exercises-description {
+      font-size: 16px;
+    }
+  }
