@@ -4,12 +4,11 @@ import { useParams, useLocation, Link } from 'react-router-dom';
 import './RestApiSimulator.css';
 import Spinner from '../common/Spinner';
 
-// Вспомогательная функция для подсветки синтаксиса JSON
+// Функция подсветки синтаксиса JSON
 const formatJsonSyntax = (jsonString) => {
   if (!jsonString) return '';
   
   try {
-    // Заменяем ключи, строки, числа и т.д. spans с классами для стилизации
     return jsonString
       .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
       .replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>')
@@ -21,9 +20,7 @@ const formatJsonSyntax = (jsonString) => {
   }
 };
 
-
 const RestApiSimulator = () => {
-  // Получаем параметры из URL, включая categoryId
   const { exerciseId, categoryId } = useParams();
   const location = useLocation();
   const [exerciseData, setExerciseData] = useState(null);
@@ -36,7 +33,7 @@ const RestApiSimulator = () => {
   const [showResponse, setShowResponse] = useState(false);
   const [taskCompleted, setTaskCompleted] = useState(false);
   
-  // Загрузка данных упражнения при монтировании компонента
+  // Загрузка данных упражнения 
   useEffect(() => {
     const loadExerciseData = async () => {
       setLoading(true);
@@ -50,16 +47,16 @@ const RestApiSimulator = () => {
             task: 'Выполните GET запрос для получения данных пользователя с ID 1. Используйте URL /api/users/1'
           });
         } else {
-          // Здесь можно добавить логику загрузки данных упражнения по ID
+          // Логика загрузки данных по ID
           console.log('Загрузка данных упражнения для ID:', exerciseId);
           
-          // Имитируем задержку загрузки для демонстрации спиннера
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          // Имитация задержки
+          await new Promise(resolve => setTimeout(resolve, 800));
           
-          // Пример загрузки фиктивных данных
+          // Пример загрузки данных
           setExerciseData({
             id: exerciseId,
-            title: `Упражнение по REST API ${exerciseId}`,
+            title: `Упражнение ${exerciseId}: REST API`,
             task: 'Выполните GET запрос для получения данных пользователя с ID 1. Используйте URL /api/users/1'
           });
         }
@@ -73,9 +70,8 @@ const RestApiSimulator = () => {
     loadExerciseData();
   }, [exerciseId, location.state]);
 
-  // Функция для проверки выполнения задания
+  // Проверка выполнения задания
   const checkTaskCompletion = (method, url, response) => {
-    // Примеры условий для проверки выполнения задания
     if (method === 'GET' && url === '/api/users/1' && response.status === 200) {
       setTaskCompleted(true);
       return true;
@@ -85,15 +81,14 @@ const RestApiSimulator = () => {
 
   // Обработчик отправки запроса
   const handleSendRequest = async () => {
-    // Показываем локальный спиннер только для области ответа
     setLoading(true);
     setShowResponse(true);
     
     try {
       // Имитация задержки запроса
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 800));
       
-      // Определяем тип ответа в зависимости от запроса
+      // Определяем тип ответа
       let responseData = {};
       let status = '200 OK';
       
@@ -130,7 +125,7 @@ const RestApiSimulator = () => {
           status = '201 Created';
         } catch (e) {
           responseData = {
-            error: "Неверный формат JSON в теле запроса",
+            error: "Неверный формат JSON",
             details: e.message
           };
           status = '400 Bad Request';
@@ -138,7 +133,7 @@ const RestApiSimulator = () => {
       } else if (url === '') {
         responseData = {
           error: "URL запроса не указан",
-          details: "Пожалуйста, укажите URL для выполнения запроса"
+          details: "Укажите URL для выполнения запроса"
         };
         status = '400 Bad Request';
       } else {
@@ -148,7 +143,7 @@ const RestApiSimulator = () => {
         };
       }
       
-      // Добавляем служебную информацию
+      // Метаданные
       responseData = {
         ...responseData,
         meta: {
@@ -166,7 +161,7 @@ const RestApiSimulator = () => {
       
       // Проверяем выполнение задания
       checkTaskCompletion(method, url, {
-        status: status.startsWith('2'), // Проверяем успешность запроса
+        status: status.startsWith('2'),
         data: responseData
       });
       
@@ -180,7 +175,6 @@ const RestApiSimulator = () => {
       setLoading(false);
     }
   };
-
 
   if (!exerciseData) {
     return (
@@ -204,7 +198,6 @@ const RestApiSimulator = () => {
       
       <div className="rest-api-simulator">
         <div className="api-controls">
-          
           <div className="simulator-layout">
             {/* Колонка с заданием */}
             <div className="task-column">
@@ -220,12 +213,10 @@ const RestApiSimulator = () => {
                   <div className="task-completed">
                     <div className="task-completed-icon">✓</div>
                     <div className="task-completed-message">
-                      Задание выполнено успешно! Вы можете перейти к следующему упражнению.
+                      Задание выполнено успешно!
                     </div>
                   </div>
                 )}
-                
-                
               </div>
             </div>
             
@@ -266,14 +257,14 @@ const RestApiSimulator = () => {
                       </>
                     ) : "Отправить запрос"}
                   </button>
-                </div>>
+                </div>
                 
                 <div className="request-body">
                   <h3>Тело запроса</h3>
                   <textarea 
                     placeholder={method === 'GET' ? 
                       "GET запросы не имеют тела" : 
-                      'Введите JSON данные...\n{\n  "name": "Имя",\n  "email": "email@example.com"\n}'} 
+                      '{\n  "name": "Имя",\n  "email": "email@example.com"\n}'} 
                     rows="6"
                     value={requestBody}
                     onChange={(e) => setRequestBody(e.target.value)}

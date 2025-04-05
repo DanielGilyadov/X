@@ -1,43 +1,31 @@
-/* Улучшенные стили для REST API симулятора */
+/* Основные стили для REST API симулятора */
 .rest-api-simulator {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 3px 15px rgba(138, 79, 255, 0.08);
-  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 32px;
   margin-bottom: 30px;
 }
 
-/* Общие стили заголовков */
+/* Заголовки */
 .rest-api-simulator h2 {
-  color: #8a4fff;
+  color: #2563eb;
   font-size: 24px;
-  margin-bottom: 16px;
-  position: relative;
-  display: inline-block;
-}
-
-.rest-api-simulator h2::after {
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: linear-gradient(90deg, #8a4fff 0%, #7030e0 100%);
-  border-radius: 2px;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
 .rest-api-simulator h3 {
-  color: #555;
+  color: #374151;
   font-size: 18px;
   margin-bottom: 12px;
   font-weight: 600;
 }
 
 .rest-api-simulator p {
-  color: #666;
+  color: #4b5563;
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 20px;
 }
 
@@ -55,70 +43,72 @@
 
 .method-selector select {
   padding: 12px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #f9f6ff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background-color: #f3f4f6;
   font-weight: 600;
   cursor: pointer;
-  color: #7030e0;
-  min-width: 120px;
+  color: #2563eb;
+  min-width: 130px;
   transition: all 0.2s ease;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='6'%3E%3Cpath d='M6 6L0 0h12z' fill='%237030e0'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 16px center;
+  background-position: right 12px center;
+  background-size: 16px;
   padding-right: 40px;
 }
 
 .method-selector select:hover, 
 .method-selector select:focus {
-  border-color: #8a4fff;
-  box-shadow: 0 0 0 2px rgba(138, 79, 255, 0.1);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .method-selector input {
   flex-grow: 1;
   padding: 12px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  color: #333;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #111827;
   transition: all 0.2s ease;
 }
 
 .method-selector input:focus {
-  border-color: #8a4fff;
-  box-shadow: 0 0 0 2px rgba(138, 79, 255, 0.1);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   outline: none;
 }
 
 .method-selector input::placeholder {
-  color: #aaa;
+  color: #9ca3af;
 }
 
-/* Стилизация кнопки отправки */
+/* Кнопка отправки */
 .send-request-button {
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
   font-weight: 600;
-  font-size: 16px;
-  background: linear-gradient(90deg, #8a4fff 0%, #7030e0 100%);
+  font-size: 15px;
+  background: #2563eb;
   color: white;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 150px;
+  min-width: 160px;
 }
 
 .send-request-button:hover {
+  background: #1d4ed8;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 79, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 .send-request-button:active {
@@ -126,7 +116,7 @@
 }
 
 .send-request-button:disabled {
-  background: #c0b3e5;
+  background: #93c5fd;
   transform: none;
   box-shadow: none;
   cursor: not-allowed;
@@ -134,80 +124,76 @@
 
 /* Область запроса */
 .request-body {
-  margin-top: 30px;
+  margin-top: 28px;
   margin-bottom: 30px;
 }
 
 .request-body textarea {
   width: 100%;
   padding: 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-family: 'Consolas', 'Monaco', monospace;
-  font-size: 15px;
-  line-height: 1.5;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.6;
   resize: vertical;
-  min-height: 120px;
+  min-height: 140px;
   transition: all 0.2s ease;
-  background-color: #fcfcfc;
+  background-color: #f9fafb;
 }
 
 .request-body textarea:focus {
-  border-color: #8a4fff;
+  border-color: #2563eb;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(138, 79, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
   background-color: #fff;
 }
 
 .request-body textarea:disabled {
-  background-color: #f5f5f5;
-  color: #999;
+  background-color: #f3f4f6;
+  color: #6b7280;
   cursor: not-allowed;
 }
 
 /* Область ответа */
 .response-area {
-  margin-top: 30px;
-  padding: 25px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  border: 1px solid #eee;
+  margin-top: 32px;
+  padding: 24px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
 }
 
 .response-area-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
-}
-
-.response-area-header h3 {
-  margin-bottom: 0;
+  margin-bottom: 16px;
 }
 
 .response-code {
   display: inline-flex;
   align-items: center;
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
   font-size: 14px;
   gap: 8px;
 }
 
 .response-code.success {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: #dcfce7;
+  color: #16a34a;
 }
 
 .response-code.error {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: #fee2e2;
+  color: #dc2626;
 }
 
 .response-code.neutral {
-  background-color: #f5f0ff;
-  color: #8a4fff;
+  background-color: #e0f2fe;
+  color: #0284c7;
 }
 
 .response-code-status {
@@ -223,39 +209,37 @@
 
 .response-body {
   background-color: #ffffff;
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid #eee;
-  font-family: 'Consolas', 'Monaco', monospace;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
   white-space: pre-wrap;
   overflow-x: auto;
-  line-height: 1.5;
+  line-height: 1.6;
   font-size: 14px;
-  color: #333;
-  max-height: 350px;
+  color: #111827;
+  max-height: 380px;
   overflow-y: auto;
 }
 
-/* Стили для задания */
+/* Задание */
 .exercise-task {
-  background: linear-gradient(135deg, #f5f0ff 0%, #f0f5ff 100%);
-  padding: 25px;
-  border-radius: 10px;
+  background: #f0f9ff;
+  padding: 24px;
+  border-radius: 12px;
   margin: 30px 0;
-  position: relative;
-  border-left: 4px solid #8a4fff;
+  border-left: 4px solid #2563eb;
 }
 
-/* Горизонтальное расположение задания и поля решения */
+/* Расположение задания и решения */
 .simulator-layout {
   display: flex;
-  margin-top: 20px;
-  gap: 30px;
+  margin-top: 24px;
+  gap: 32px;
 }
 
 .simulator-layout .task-column {
-  flex: 0 0 40%;
-  max-width: 40%;
+  flex: 0 0 38%;
 }
 
 .simulator-layout .solution-column {
@@ -263,7 +247,7 @@
 }
 
 .task-description {
-  color: #555;
+  color: #4b5563;
   line-height: 1.6;
 }
 
@@ -278,40 +262,75 @@
 }
 
 .task-description li::marker {
-  color: #8a4fff;
+  color: #2563eb;
   font-weight: bold;
 }
 
-/* Стили кодовых примеров внутри задания */
-.task-code-example {
-  background-color: #fff;
-  border: 1px solid rgba(138, 79, 255, 0.2);
-  border-radius: 6px;
-  padding: 12px;
-  margin: 15px 0;
-  font-family: 'Consolas', 'Monaco', monospace;
-  font-size: 14px;
-}
-
-/* Состояние загрузки для области ответа */
+/* Спиннер в области ответа */
 .response-loading {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 200px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
 }
 
-/* Разделы интерфейса API */
-.api-interface {
-  margin-top: 25px;
+/* JSON с подсветкой синтаксиса */
+.json-key {
+  color: #8b5cf6;
 }
 
-/* Адаптивный дизайн */
-@media (max-width: 768px) {
+.json-string {
+  color: #10b981;
+}
+
+.json-number {
+  color: #3b82f6;
+}
+
+.json-boolean {
+  color: #f59e0b;
+}
+
+.json-null {
+  color: #ef4444;
+}
+
+/* Индикатор успешного выполнения */
+.task-completed {
+  background-color: #dcfce7;
+  color: #16a34a;
+  padding: 16px;
+  border-radius: 10px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.task-completed-icon {
+  width: 28px;
+  height: 28px;
+  background-color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.task-completed-message {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+/* Адаптивность */
+@media (max-width: 840px) {
   .rest-api-simulator {
-    padding: 20px;
+    padding: 24px;
   }
   
   .method-selector {
@@ -325,10 +344,9 @@
   
   .send-request-button {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 12px;
   }
   
-  /* Перенос колонок для мобильных устройств */
   .simulator-layout {
     flex-direction: column;
   }
@@ -338,153 +356,4 @@
     flex: 1;
     max-width: 100%;
   }
-}
-
-/* JSON с подсветкой синтаксиса */
-.json-key {
-  color: #7030e0;
-}
-
-.json-string {
-  color: #2e7d32;
-}
-
-.json-number {
-  color: #0277bd;
-}
-
-.json-boolean {
-  color: #e65100;
-}
-
-.json-null {
-  color: #bf360c;
-}
-
-/* Документация методов API */
-.api-documentation {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
-}
-
-.api-doc-method {
-  margin-bottom: 20px;
-}
-
-.api-doc-method-name {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-weight: 600;
-  font-size: 14px;
-  margin-right: 10px;
-}
-
-.api-doc-method-name.get {
-  background-color: #e3f2fd;
-  color: #1565c0;
-}
-
-.api-doc-method-name.post {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-}
-
-.api-doc-method-name.put {
-  background-color: #fff8e1;
-  color: #ff8f00;
-}
-
-.api-doc-method-name.delete {
-  background-color: #ffebee;
-  color: #c62828;
-}
-
-.api-doc-method-path {
-  font-family: 'Consolas', 'Monaco', monospace;
-  font-weight: 500;
-  color: #333;
-}
-
-.api-doc-method-description {
-  margin-top: 8px;
-  color: #666;
-}
-
-/* Подсказки для URL */
-.url-suggestions {
-  margin-top: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.url-suggestion {
-  background-color: #f5f0ff;
-  color: #8a4fff;
-  border: 1px solid rgba(138, 79, 255, 0.2);
-  border-radius: 4px;
-  padding: 4px 10px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.url-suggestion:hover {
-  background-color: #e5d8ff;
-  transform: translateY(-1px);
-}
-
-/* Вкладки для разных типов API */
-.api-tabs {
-  display: flex;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
-}
-
-.api-tab {
-  padding: 12px 20px;
-  cursor: pointer;
-  font-weight: 500;
-  color: #666;
-  border-bottom: 3px solid transparent;
-  transition: all 0.2s ease;
-}
-
-.api-tab:hover {
-  color: #8a4fff;
-}
-
-.api-tab.active {
-  color: #8a4fff;
-  border-bottom-color: #8a4fff;
-}
-
-/* Индикатор успешного выполнения задания */
-.task-completed {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-  padding: 15px;
-  border-radius: 8px;
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.task-completed-icon {
-  width: 24px;
-  height: 24px;
-  background-color: #2e7d32;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-}
-
-.task-completed-message {
-  font-weight: 500;
 }
