@@ -5,7 +5,8 @@ import './RestApiSimulator.css';
 import Spinner from '../common/Spinner';
 
 const RestApiSimulator = () => {
-  const { exerciseId } = useParams();
+  // Получаем параметры из URL, включая categoryId
+  const { exerciseId, categoryId } = useParams();
   const location = useLocation();
   const [exerciseData, setExerciseData] = useState(null);
   const [method, setMethod] = useState('GET');
@@ -90,9 +91,11 @@ const RestApiSimulator = () => {
   return (
     <div className="page">
       <div className="breadcrumbs">
-        <Link to="/exercises">Упражнения</Link> / 
-        <Link to="/exercises/Rest">REST интеграции</Link> / 
-        {exerciseData.title}
+        <Link to="/exercises">Упражнения</Link> 
+        <Link to={`/exercises/${categoryId || 'Rest'}`}>
+          {categoryId ? (categoryId === 'rests' ? 'REST интеграции' : categoryId) : 'REST интеграции'}
+        </Link> / 
+        task{exerciseId}
       </div>
       
       <h1>{exerciseData.title}</h1>

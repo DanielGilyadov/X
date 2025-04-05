@@ -30,7 +30,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/subscription" element={<Subscription />} />
-                <Route path="/api-simulator/:exerciseId" element={<RestApiSimulator />} />
+                <Route path="/exercises/:categoryId/apisimulator/:exerciseId" element={<RestApiSimulator />} />
               </Routes>
             </div>
           </div>
