@@ -104,6 +104,15 @@ const RestApiSimulator = () => {
         <div className="api-controls">
           <h2>REST API Симулятор</h2>
           <p>Используйте этот симулятор для выполнения REST API упражнений.</p>
+
+          <div className="exercise-task">
+          <h2>Задание</h2>
+          <div className="task-description">
+            <ol>
+              <li>Выполнить GET запрос для получения данных пользователя</li>
+            </ol>
+          </div>
+        </div>
           
           <div className="api-interface">
             <div className="method-selector">
@@ -144,15 +153,6 @@ const RestApiSimulator = () => {
               ></textarea>
             </div>
 
-          </div>
-        </div>
-        
-        <div className="exercise-task">
-          <h2>Задание</h2>
-          <div className="task-description">
-            <ol>
-              <li>Выполнить GET запрос для получения данных пользователя</li>
-            </ol>
           </div>
         </div>
       </div>
