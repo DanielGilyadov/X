@@ -16,6 +16,7 @@ const Home = () => {
     }
     
     return () => {
+      // Очистка при размонтировании
     };
   }, []);
 
@@ -28,62 +29,64 @@ const Home = () => {
       <canvas id="particles-canvas" className="particles-background"></canvas>
       
       <div className={`home-content ${isLoaded ? 'fade-in' : ''}`}>
-        <div className="home-header">
-          <h1 className="animated-title">Единственный тренажер<br />по системному анализу</h1>
-          <p className="animated-subtitle">Добро пожаловать в Метавижн - интерактивная платформа для развития навыков системного мышления</p>
-        </div>
+        <div className="home-container">
+          <div className="home-header">
+            <h1 className="animated-title">Единственный тренажер<br />по системному анализу</h1>
+            <p className="animated-subtitle">Добро пожаловать в Метавижн - интерактивная платформа для развития навыков системного мышления</p>
+          </div>
 
-        <div className="home-hero">
-          <div className="hero-content">
-            <h2>Развивайте системное мышление с нашими упражнениями</h2>
-            <p>Интерактивные задания, визуализации и практические примеры помогут вам освоить методы системного анализа и применить их в реальных проектах.</p>
+          <div className="home-hero">
+            <div className="hero-content">
+              <h2>Развивайте системное мышление с нашими упражнениями</h2>
+              <p>Интерактивные задания, визуализации и практические примеры помогут вам освоить методы системного анализа и применить их в реальных проектах.</p>
+              
+              <div className="hero-actions">
+                <button 
+                  className="primary-button pulse-animation" 
+                  onClick={handleStartNow}
+                >
+                  Начать сейчас
+                </button>
+                <Link to="/exercises" className="secondary-link">
+                  Просмотреть упражнения
+                </Link>
+              </div>
+            </div>
             
-            <div className="hero-actions">
-              <button 
-                className="primary-button pulse-animation" 
-                onClick={handleStartNow}
-              >
-                Начать сейчас
-              </button>
-              <Link to="/exercises" className="secondary-link">
-                Просмотреть упражнения
-              </Link>
+            <div className="feature-cards">
+              <div className="feature-card">
+                <div className="feature-icon">📊</div>
+                <h3>REST API</h3>
+                <p>Практика работы с современными интеграциями и API</p>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">💡</div>
+                <h3>Системное мышление</h3>
+                <p>Развитие навыков анализа сложных систем</p>
+              </div>
+              
+              <div className="feature-card">
+                <div className="feature-icon">🔄</div>
+                <h3>Интерактивность</h3>
+                <p>Учитесь на практике, а не только в теории</p>
+              </div>
             </div>
           </div>
           
-          <div className="feature-cards">
-            <div className="feature-card">
-              <div className="feature-icon">📊</div>
-              <h3>REST API</h3>
-              <p>Практика работы с современными интеграциями и API</p>
+          <div className="stats-section">
+            <div className="stat-item">
+              <span className="stat-number">10+</span>
+              <span className="stat-label">Упражнений</span>
             </div>
-            
-            <div className="feature-card">
-              <div className="feature-icon">💡</div>
-              <h3>Системное мышление</h3>
-              <p>Развитие навыков анализа сложных систем</p>
+            <div className="stat-item">
+              <span className="stat-number">3</span>
+              <span className="stat-label">Категории</span>
             </div>
-            
-            <div className="feature-card">
-              <div className="feature-icon">🔄</div>
-              <h3>Интерактивность</h3>
-              <p>Учитесь на практике, а не только в теории</p>
+            <div className="stat-item">
+              <span className="stat-number">24/7</span>
+              <span className="stat-label">Доступ</span>
             </div>
-          </div>
-        </div>
-        
-        <div className="stats-section">
-          <div className="stat-item">
-            <span className="stat-number">10+</span>
-            <span className="stat-label">Упражнений</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number">3</span>
-            <span className="stat-label">Категории</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-number">24/7</span>
-            <span className="stat-label">Доступ</span>
           </div>
         </div>
       </div>
@@ -91,7 +94,7 @@ const Home = () => {
   );
 };
 
-
+// Функция для инициализации частиц на фоне
 const initParticles = (canvas) => {
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
@@ -112,7 +115,7 @@ const initParticles = (canvas) => {
   }
   
   function animate() {
-    
+    // Очищаем canvas с небольшой прозрачностью для эффекта следа
     ctx.fillStyle = 'rgba(249, 249, 249, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -130,7 +133,7 @@ const initParticles = (canvas) => {
       ctx.fillStyle = p.color;
       ctx.fill();
       
-      // Connect particles with lines if they are close
+      // Соединяем частицы линиями, если они находятся близко друг к другу
       for (let j = i; j < particles.length; j++) {
         const p2 = particles[j];
         const dx = p.x - p2.x;
@@ -139,7 +142,7 @@ const initParticles = (canvas) => {
         
         if (distance < 100) {
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(138, 79, 255, ${0.1 * (1 - distance/100)})`; // Fade with distance
+          ctx.strokeStyle = `rgba(138, 79, 255, ${0.1 * (1 - distance/100)})`; // Прозрачность увеличивается при сближении
           ctx.lineWidth = 0.5;
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p2.x, p2.y);
