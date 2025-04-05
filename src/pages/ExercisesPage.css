@@ -71,19 +71,6 @@
     overflow: hidden;
   }
   
-  /* Декоративный элемент в углу карточки */
-  .exercise-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, transparent 50%, rgba(138, 79, 255, 0.08) 50%);
-    border-radius: 0 12px 0 0;
-    transition: all 0.3s ease;
-  }
-  
   .exercise-card:hover {
     box-shadow: 0 10px 30px rgba(138, 79, 255, 0.15);
     border-color: rgba(138, 79, 255, 0.2);
