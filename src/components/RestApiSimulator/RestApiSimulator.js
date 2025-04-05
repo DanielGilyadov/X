@@ -143,34 +143,15 @@ const RestApiSimulator = () => {
                 disabled={method === 'GET'}
               ></textarea>
             </div>
-            
-            <div className="response-area">
-              <h3>Ответ сервера</h3>
-              <div className="response-code">
-                Код ответа: <span>{responseStatus || 'Ожидание запроса'}</span>
-              </div>
-              
-              {loading ? (
-                <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-                  <Spinner size="medium" text="Получение ответа..." />
-                </div>
-              ) : (
-                <pre className="response-body">
-                  {responseBody || '{\n  "message": "Используйте этот симулятор для тестирования API запросов"\n}'}
-                </pre>
-              )}
-            </div>
+
           </div>
         </div>
         
         <div className="exercise-task">
           <h2>Задание</h2>
           <div className="task-description">
-            <p>Для этого упражнения вам необходимо использовать API симулятор для выполнения следующих задач:</p>
             <ol>
               <li>Выполнить GET запрос для получения данных пользователя</li>
-              <li>Создать нового пользователя с помощью POST запроса</li>
-              <li>Обновить информацию о пользователе используя PUT запрос</li>
             </ol>
           </div>
         </div>
