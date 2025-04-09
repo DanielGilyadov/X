@@ -5,7 +5,12 @@ import {
   Panel, 
   PanelGroup
 } from "react-resizable-panels";
-import { LightBulbIcon, CheckIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import { 
+  LightBulbIcon, 
+  CheckIcon, 
+  ArrowPathIcon, 
+  ChevronRightIcon 
+} from '@heroicons/react/24/outline';
 import './RestApiSimulator.css';
 import './EnhancedPanels.css'; // Подключаем новые стили для панелей
 import Spinner from '../common/Spinner';
@@ -112,7 +117,6 @@ const RestApiSimulator = () => {
         </Link> {' / '}
         {exerciseData.title || `task${exerciseId}`}
       </div>
-
       
       {showSuccessMessage && (
         <div className="success-notification">
@@ -201,7 +205,7 @@ const RestApiSimulator = () => {
         <div className="next-exercise">
           <button className="next-exercise-button">
             <span>Следующее упражнение</span>
-            <ArrowPathIcon className="next-icon" />
+            <ChevronRightIcon className="next-icon" />
           </button>
         </div>
       )}

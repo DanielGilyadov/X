@@ -1,19 +1,22 @@
+/* Обновленный SchemaViewer.css с пастельным фиолетовым фоном */
 .database-schema {
   width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem;
-  background-color: #ffffff;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f0e6ff 0%, #e8e0ff 100%);
   border-radius: 0.75rem;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 15px rgba(138, 79, 255, 0.1);
+  color: #4b5563;
+  transition: all 0.3s ease;
 }
 
 .schema-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #8a4fff;
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -23,6 +26,7 @@
   min-width: 400px;
   padding: 1rem;
   cursor: grab;
+  transition: transform 0.3s ease;
 }
 
 .schema-content:active {
@@ -31,12 +35,19 @@
 
 .schema-table {
   width: 100%;
-  background-color: #f8fafc;
+  background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem;
   overflow: hidden;
   margin-bottom: 1rem;
   min-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.schema-table:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(138, 79, 255, 0.15);
 }
 
 .schema-table:last-child {
@@ -44,14 +55,14 @@
 }
 
 .schema-table-header {
-  background-color: #f1f5f9;
+  background: linear-gradient(90deg, #f5f0ff 0%, #f0e6ff 100%);
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #e2e8f0;
 }
 
 .schema-table-name {
   font-weight: 600;
-  color: #1f2937;
+  color: #8a4fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,6 +83,11 @@
   padding: 0.5rem 0;
   border-bottom: 1px solid #f1f5f9;
   min-width: 350px;
+  transition: background-color 0.2s ease;
+}
+
+.schema-field:hover {
+  background-color: #f8fafc;
 }
 
 .schema-field:last-child {
@@ -95,13 +111,13 @@
 }
 
 .schema-key-icon {
-  color: #eab308;
+  color: #8a4fff;
   margin-right: 0.5rem;
   width: 16px;
   height: 16px;
 }
 
-/* Стили для контейнера с зумом */
+/* Улучшенные стили для контейнера с зумом */
 .react-transform-wrapper {
   width: 100% !important;
   height: auto !important;
@@ -114,18 +130,19 @@
   justify-content: center !important;
 }
 
-@media (max-width: 640px) {
+/* Адаптивные стили */
+@media (max-width: 768px) {
   .database-schema {
-    padding: 1rem;
+    padding: 0.75rem;
   }
   
   .schema-content {
-    min-width: 300px;
+    min-width: 280px;
     padding: 0.5rem;
   }
 
   .schema-table {
-    min-width: 300px;
+    min-width: 280px;
   }
   
   .schema-field {
@@ -139,4 +156,44 @@
   .schema-field {
     padding: 0.375rem 0;
   }
-} 
+}
+
+/* Улучшенные элементы управления зумом */
+.zoom-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.zoom-button {
+  background-color: white;
+  color: #8a4fff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+.zoom-button:hover {
+  background-color: #f5f0ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(138, 79, 255, 0.2);
+}
+
+.zoom-level {
+  background-color: white;
+  padding: 0.25rem 0.625rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8a4fff;
+}

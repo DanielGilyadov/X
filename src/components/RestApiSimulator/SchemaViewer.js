@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { KeyIcon } from '@heroicons/react/24/solid';
+import { PlusIcon, MinusIcon } from '@heroicons/react/24/outline';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import './SchemaViewer.css';
 
 const SchemaViewer = ({ tables }) => {
+  const [scale, setScale] = useState(1);
+
   const renderField = (fieldName, fieldType, isPrimaryKey = false) => (
     <div key={fieldName} className="schema-field">
       <div className="schema-field-name">
@@ -62,21 +65,35 @@ const SchemaViewer = ({ tables }) => {
         initialPositionX={0}
         initialPositionY={0}
         wheel={{ wheelEnabled: true }}
+        onZoom={({ state }) => setScale(state.scale)}
       >
-        <TransformComponent
-          wrapperStyle={{
-            width: "100%",
-            height: "100%",
-            maxWidth: "800px",
-            margin: "0 auto"
-          }}
-        >
-          <div className="schema-content">
-            {Object.entries(schema).map(([tableName, fields]) =>
-              renderTable(tableName, fields)
-            )}
-          </div>
-        </TransformComponent>
+        {({ zoomIn, zoomOut, resetTransform }) => (
+          <>
+            <div className="zoom-controls">
+              <button className="zoom-button" onClick={() => zoomOut()}>
+                <MinusIcon width={16} height={16} />
+              </button>
+             
+              <button className="zoom-button" onClick={() => zoomIn()}>
+                <PlusIcon width={16} height={16} />
+              </button>
+            </div>
+            <TransformComponent
+              wrapperStyle={{
+                width: "100%",
+                height: "100%",
+                maxWidth: "800px",
+                margin: "0 auto"
+              }}
+            >
+              <div className="schema-content">
+                {Object.entries(schema).map(([tableName, fields]) =>
+                  renderTable(tableName, fields)
+                )}
+              </div>
+            </TransformComponent>
+          </>
+        )}
       </TransformWrapper>
     </div>
   );
@@ -86,4 +103,4 @@ SchemaViewer.propTypes = {
   tables: PropTypes.object
 };
 
-export default SchemaViewer; 
+export default SchemaViewer;
