@@ -106,7 +106,7 @@ const RestApiSimulator = () => {
   return (
     <div className="page full-width-page">
       <div className="breadcrumbs">
-        <Link to="/exercises">Упражнения</Link> {' / '}
+        <Link to="/exercises">Упражнения</Link> 
         <Link to={`/exercises/${categoryId || 'Rest'}`}>
           {categoryId ? (categoryId === 'rests' ? 'REST интеграции' : categoryId) : 'REST интеграции'}
         </Link> {' / '}
@@ -143,7 +143,7 @@ const RestApiSimulator = () => {
           
           {/* Центральная колонка с решением */}
           <Panel 
-            defaultSize={50} 
+            defaultSize={45} 
             minSize={30}
             className="panel solution-panel"
           >
@@ -159,7 +159,7 @@ const RestApiSimulator = () => {
 
           {/* Правая колонка со схемой БД */}
           <Panel 
-            defaultSize={25} 
+            defaultSize={30} 
             minSize={15}
             className="panel data-panel"
           >
