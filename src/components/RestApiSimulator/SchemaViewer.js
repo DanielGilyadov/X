@@ -54,7 +54,6 @@ const SchemaViewer = ({ tables }) => {
 
   return (
     <div className="database-schema">
-      <h3 className="schema-title">База данных</h3>
       <TransformWrapper
         initialScale={0.8}
         minScale={0.4}

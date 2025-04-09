@@ -1,0 +1,81 @@
+/* Стили для улучшенных панелей и разделителей */
+
+/* Основной стиль для панелей */
+.panels-container {
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* Стили для панелей */
+  .panel {
+    position: relative;
+    transition: all var(--transition-fast);
+    overflow: hidden;
+  }
+  
+  .task-panel {
+    background-color: var(--surface-color);
+  }
+  
+  .solution-panel {
+    background-color: var(--surface-color);
+  }
+  
+  .data-panel {
+    background-color: var(--surface-color);
+  }
+  
+  /* Улучшенный разделитель панелей */
+  .panel-resize-handle {
+    width: 6px;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: col-resize;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+    z-index: 10;
+  }
+  
+  .panel-resize-handle:hover,
+  .panel-resize-handle[data-resize-handle-active="true"] {
+    background-color: var(--primary-light);
+    transform: scaleX(1.5);
+  }
+  
+  .handle-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 0;
+  }
+  
+  .handle-dot {
+    width: 4px;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: 50%;
+    transition: background-color var(--transition-fast);
+  }
+  
+  .panel-resize-handle:hover .handle-dot,
+  .panel-resize-handle[data-resize-handle-active="true"] .handle-dot {
+    background-color: white;
+  }
+  
+  /* Стили для содержимого панелей */
+  .panel-content {
+    height: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  
+  /* Анимация для панелей при изменении размера */
+  .panel-animation {
+    transition: width 0.15s ease-out;
+  }

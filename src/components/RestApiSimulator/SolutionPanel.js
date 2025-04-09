@@ -1,7 +1,14 @@
 // src/components/RestApiSimulator/SolutionPanel.js
 import React, { useState } from 'react';
-import './RestApiSimulator.css';
+import { 
+  ArrowRightIcon, 
+  ArrowPathIcon, 
+  DocumentTextIcon, 
+  ExclamationCircleIcon,
+  CheckCircleIcon
+} from '@heroicons/react/24/outline';
 import Spinner from '../common/Spinner';
+import './SolutionPanel.css';
 
 // Функция подсветки синтаксиса JSON
 const formatJsonSyntax = (jsonString) => {
@@ -27,6 +34,7 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
   const [responseBody, setResponseBody] = useState('');
   const [loading, setLoading] = useState(false);
   const [showResponse, setShowResponse] = useState(false);
+  const [history, setHistory] = useState([]);
   
   // Обработчик отправки запроса
   const handleSendRequest = async () => {
@@ -35,7 +43,7 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
     
     try {
       // Имитация задержки запроса
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 800));
       
       // Определение ответа в зависимости от запроса
       let responseData = {};
@@ -97,7 +105,21 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
       setResponseStatus(status);
       
       // Устанавливаем тело ответа
-      setResponseBody(JSON.stringify(responseData, null, 2));
+      const formattedResponse = JSON.stringify(responseData, null, 2);
+      setResponseBody(formattedResponse);
+      
+      // Добавляем запрос в историю
+      const newHistoryItem = {
+        id: Date.now(),
+        method,
+        url,
+        requestBody: requestBody || null,
+        responseStatus: status,
+        responseBody: formattedResponse,
+        isSuccess: status.startsWith('2')
+      };
+      
+      setHistory(prev => [newHistoryItem, ...prev.slice(0, 4)]);
       
       // Проверяем выполнение задания и передаем результат
       const isCompleted = method === 'GET' && url === '/api/users/1' && status.startsWith('2');
@@ -128,28 +150,58 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
     }
   };
 
+  // Функция получения цвета метода
+  const getMethodColor = (methodType) => {
+    switch(methodType) {
+      case 'GET': return 'method-get';
+      case 'POST': return 'method-post';
+      case 'PUT': return 'method-put';
+      case 'DELETE': return 'method-delete';
+      case 'PATCH': return 'method-patch';
+      default: return '';
+    }
+  }
+  
+  // Загрузка запроса из истории
+  const loadFromHistory = (item) => {
+    setMethod(item.method);
+    setUrl(item.url);
+    setRequestBody(item.requestBody || '');
+    setResponseStatus(item.responseStatus);
+    setResponseBody(item.responseBody);
+    setShowResponse(true);
+  };
+
   return (
-    <div className="solution-column">
+    <div className="solution-wrapper">
+
+    
       <div className="method-selector">
-        <select 
-          value={method} 
-          onChange={(e) => setMethod(e.target.value)}
-          aria-label="HTTP метод"
-        >
-          <option value="GET">GET</option>
-          <option value="POST">POST</option>
-          <option value="PUT">PUT</option>
-          <option value="DELETE">DELETE</option>
-          <option value="PATCH">PATCH</option>
-        </select>
+        <div className="method-dropdown">
+          <select 
+            value={method} 
+            onChange={(e) => setMethod(e.target.value)}
+            aria-label="HTTP метод"
+            className={getMethodColor(method)}
+          >
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+            <option value="PATCH">PATCH</option>
+          </select>
+        </div>
         
-        <input 
-          type="text" 
-          placeholder="/api/users/1" 
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          aria-label="URL запроса"
-        />
+        <div className="url-input-container">
+          <input 
+            type="text" 
+            className="url-input"
+            placeholder="/api/users/1" 
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            aria-label="URL запроса"
+          />
+        </div>
         
         <button 
           className="send-request-button" 
@@ -161,17 +213,26 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
               <Spinner size="small" text="" />
               <span>Отправка...</span>
             </>
-          ) : "Отправить"}
+          ) : (
+            <>
+              <span>Отправить</span>
+              <ArrowRightIcon className="send-icon" />
+            </>
+          )}
         </button>
       </div>
       
       {method !== 'GET' && (
         <div className="request-body">
+          <div className="request-body-header">
+            <label htmlFor="request-body">Тело запроса</label>
+          </div>
           <textarea 
+            id="request-body"
             placeholder={
               '{\n  "name": "Имя",\n  "email": "email@example.com"\n}'
             } 
-            rows="3"
+            rows="4"
             value={requestBody}
             onChange={(e) => setRequestBody(e.target.value)}
             disabled={method === 'GET'}
@@ -183,13 +244,21 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
       {showResponse && (
         <div className="response-area">
           <div className="response-area-header">
-            <h3>Ответ сервера</h3>
+            <h3 className="response-title">
+              <DocumentTextIcon className="response-icon" />
+              Ответ сервера
+            </h3>
             {responseStatus && (
               <div className={`response-code ${
                 responseStatus.startsWith('2') ? 'success' : 'error'
               }`}>
                 <div className="response-code-status">
-                  {responseStatus}
+                  {responseStatus.startsWith('2') ? (
+                    <CheckCircleIcon className="status-icon" />
+                  ) : (
+                    <ExclamationCircleIcon className="status-icon" />
+                  )}
+                  <span>{responseStatus}</span>
                 </div>
               </div>
             )}
@@ -202,12 +271,40 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
           ) : (
             <div className="response-body">
               {responseBody ? (
-                <div dangerouslySetInnerHTML={{ __html: formatJsonSyntax(responseBody) }} />
+                <pre className="response-json">
+                  <div dangerouslySetInnerHTML={{ __html: formatJsonSyntax(responseBody) }} />
+                </pre>
               ) : (
                 <div className="no-response">Нет данных</div>
               )}
             </div>
           )}
+        </div>
+      )}
+      
+      {history.length > 0 && (
+        <div className="request-history">
+          <div className="history-header">
+            <h3 className="history-title">
+              <ArrowPathIcon className="history-icon" />
+              История запросов
+            </h3>
+          </div>
+          <div className="history-list">
+            {history.map(item => (
+              <div 
+                key={item.id} 
+                className={`history-item ${item.isSuccess ? 'success' : 'error'}`}
+                onClick={() => loadFromHistory(item)}
+              >
+                <div className={`history-method ${getMethodColor(item.method)}`}>
+                  {item.method}
+                </div>
+                <div className="history-url">{item.url}</div>
+                <div className="history-status">{item.responseStatus}</div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

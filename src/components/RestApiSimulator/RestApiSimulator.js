@@ -1,27 +1,20 @@
-// src/components/RestApiSimulator/RestApiSimulator.js (с react-resizable-panels)
+// src/components/RestApiSimulator/RestApiSimulator.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
+import { 
+  Panel, 
+  PanelGroup
+} from "react-resizable-panels";
+import { LightBulbIcon, CheckIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 import './RestApiSimulator.css';
+import './EnhancedPanels.css'; // Подключаем новые стили для панелей
 import Spinner from '../common/Spinner';
 import TaskDescription from './TaskDescription';
 import SolutionPanel from './SolutionPanel';
 import DataTableViewer from './DataTableViewer'; 
 import SchemaViewer from './SchemaViewer';
-import { 
-  Panel, 
-  PanelGroup, 
-  PanelResizeHandle 
-} from "react-resizable-panels";
+import EnhancedResizeHandle from './EnhancedPanelResizer';
 import { getEtalonsUsers } from '../../services/api';
-
-// Компонент для разделителя панелей
-const ResizeHandle = () => (
-  <PanelResizeHandle>
-    <div className="panel-resize-handle">
-      <div className="handle-line"></div>
-    </div>
-  </PanelResizeHandle>
-);
 
 const RestApiSimulator = () => {
   const { exerciseId, categoryId } = useParams();
@@ -29,7 +22,9 @@ const RestApiSimulator = () => {
   const [exerciseData, setExerciseData] = useState(null);
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [etalonsData, setEtalonsData] = useState(null); 
+  const [etalonsData, setEtalonsData] = useState(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [activeTab, setActiveTab] = useState('database');
   
   // Загрузка данных упражнения 
   useEffect(() => {
@@ -87,6 +82,12 @@ const RestApiSimulator = () => {
   // Обработчик успешного выполнения задания
   const handleTaskCompletion = (completed) => {
     setTaskCompleted(completed);
+    if (completed && !showSuccessMessage) {
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
+    }
   };
 
   // Обработчик отправки запроса (для логирования или других действий)
@@ -105,40 +106,48 @@ const RestApiSimulator = () => {
   return (
     <div className="page full-width-page">
       <div className="breadcrumbs">
-        <Link to="/exercises">Упражнения</Link> 
+        <Link to="/exercises">Упражнения</Link> {' / '}
         <Link to={`/exercises/${categoryId || 'Rest'}`}>
           {categoryId ? (categoryId === 'rests' ? 'REST интеграции' : categoryId) : 'REST интеграции'}
         </Link> {' / '}
         {exerciseData.title || `task${exerciseId}`}
       </div>
+
       
-      <h1>{exerciseData.title}</h1>
+      {showSuccessMessage && (
+        <div className="success-notification">
+          <CheckIcon className="success-icon" />
+          <span>Отлично! Вы успешно выполнили задание!</span>
+          <button onClick={() => setShowSuccessMessage(false)} className="close-notification">×</button>
+        </div>
+      )}
       
-      <div className="rest-api-simulator">
-        <PanelGroup direction="horizontal">
+      <div className="rest-api-simulator panels-container">
+        <PanelGroup direction="horizontal" className="panel-animation">
           {/* Левая колонка с заданием */}
           <Panel 
             defaultSize={25} 
             minSize={15}
-            className="task-panel"
+            className="panel task-panel"
           >
-            <div className="task-column">
+            <div className="panel-content task-column">
               <TaskDescription 
                 task={exerciseData.task} 
                 isCompleted={taskCompleted} 
               />
+              
             </div>
           </Panel>
           
-          <ResizeHandle />
+          <EnhancedResizeHandle />
           
           {/* Центральная колонка с решением */}
           <Panel 
             defaultSize={50} 
             minSize={30}
-            className="solution-panel"
+            className="panel solution-panel"
           >
-            <div className="solution-column">
+            <div className="panel-content solution-column">
               <SolutionPanel 
                 onTaskComplete={handleTaskCompletion}
                 onSendRequest={handleSendRequest}
@@ -146,29 +155,40 @@ const RestApiSimulator = () => {
             </div>
           </Panel>
           
-          <ResizeHandle />
+          <EnhancedResizeHandle />
 
           {/* Правая колонка со схемой БД */}
           <Panel 
             defaultSize={25} 
             minSize={15}
-            className="data-panel"
+            className="panel data-panel"
           >
-            <div className="data-column">
+            <div className="panel-content data-column">
               {etalonsData && (
                 <div className="database-view">
-                  <div className="database-view-header">
-                    <h3>База данных</h3>
+                  <div className="database-tabs">
+                    <button 
+                      className={`database-tab ${activeTab === 'database' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('database')}
+                    >
+                      Схема
+                    </button>
+                    <button 
+                      className={`database-tab ${activeTab === 'data' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('data')}
+                    >
+                      Данные
+                    </button>
                   </div>
+                  
                   <div className="database-view-content">
-                    {/* Схема БД */}
-                    <div className="database-view-schema">
+                    {activeTab === 'database' && (
                       <SchemaViewer tables={etalonsData} />
-                    </div>
-                    {/* Таблица с данными */}
-                    <div className="database-view-data">
+                    )}
+                    
+                    {activeTab === 'data' && (
                       <DataTableViewer tables={etalonsData} />
-                    </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -176,6 +196,15 @@ const RestApiSimulator = () => {
           </Panel>
         </PanelGroup>
       </div>
+      
+      {taskCompleted && (
+        <div className="next-exercise">
+          <button className="next-exercise-button">
+            <span>Следующее упражнение</span>
+            <ArrowPathIcon className="next-icon" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

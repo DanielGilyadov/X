@@ -1,239 +1,298 @@
-/* Оптимизированный RestApiSimulator.css */
+/* Обновленный RestApiSimulator.css */
+
+/* Основные стили и переменные */
+:root {
+  --primary-color: #6366f1;
+  --primary-light: #818cf8;
+  --primary-dark: #4f46e5;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --background-color: #f9fafb;
+  --surface-color: #ffffff;
+  --border-color: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-tertiary: #9ca3af;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --border-radius-sm: 0.375rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+}
 
 /* Основной контейнер */
 .full-width-page {
   max-width: 100%;
-  padding: 10px 20px;
-  height: calc(100vh - 80px);
+  padding: 1.5rem;
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
+  background-color: var(--background-color);
 }
 
 .rest-api-simulator {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  padding: 16px;
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
+/* Стили для успешного выполнения задания */
+.success-notification {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-left: 4px solid var(--success-color);
+  color: #065f46;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  animation: slideIn 0.5s ease-out;
+  position: relative;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.75rem;
+  background-color: var(--success-color);
+  color: white;
+  padding: 0.25rem;
+  border-radius: 50%;
+}
+
+.close-notification {
+  background: none;
+  border: none;
+  color: #065f46;
+  font-size: 1.25rem;
+  cursor: pointer;
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.close-notification:hover {
+  opacity: 1;
+}
+
 /* Стили для разделителей панелей */
 .panel-resize-handle {
-  width: 5px;
-  background-color: #f3f4f6;
+  width: 0.25rem;
+  background-color: var(--background-color);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: col-resize;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--transition-fast);
+}
+
+.panel-resize-handle:hover {
+  background-color: var(--primary-light);
 }
 
 .handle-line {
-  width: 1px;
-  height: 24px;
-  background-color: #d1d5db;
+  width: 2px;
+  height: 2rem;
+  background-color: var(--border-color);
+}
+
+.panel-resize-handle:hover .handle-line {
+  background-color: white;
 }
 
 /* Стили для панелей */
 .task-column,
 .solution-column,
 .data-column {
-  padding: 8px;
+  padding: 1rem;
   height: 100%;
   width: 100%;
   overflow: auto;
 }
 
-/* Компонент задания */
-.task-container {
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+/* Улучшенные стили для подсказки */
+.task-hint {
+  margin-top: 1.5rem;
+  background-color: #fffbeb;
+  border-radius: var(--border-radius-md);
   overflow: hidden;
+  border: 1px solid #fef3c7;
+  transition: all var(--transition-normal);
 }
 
-.task-header {
+.task-hint-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 12px;
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-  cursor: pointer;
+  padding: 0.75rem 1rem;
+  background-color: #fef3c7;
+  color: #92400e;
+  font-weight: 600;
 }
 
-.task-title {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 500;
+.hint-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
 }
 
-.task-toggle {
+.task-hint-content {
+  padding: 1rem;
+  color: #92400e;
+  font-size: 0.9375rem;
+}
+
+/* Улучшенные стили для базы данных */
+.database-view {
+  background-color: #f8fafc;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+}
+
+.database-tabs {
+  display: flex;
+  background-color: #f1f5f9;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.database-tab {
+  padding: 0.75rem 1.25rem;
   background: none;
   border: none;
-  font-size: 16px;
-  color: #9ca3af;
-  cursor: pointer;
-}
-
-.task-content {
-  padding: 12px;
-}
-
-.task-completed {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  background-color: #f0fdf4;
-  border-radius: 4px;
-  margin-top: 12px;
-}
-
-.task-completed-icon {
-  width: 18px;
-  height: 18px;
-  background-color: #22c55e;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-/* Панель решения */
-.method-selector {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
-  align-items: center;
-}
-
-.method-selector select {
-  padding: 8px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  background-color: #f3f4f6;
-  color: #3b82f6;
-  min-width: 90px;
-}
-
-.method-selector input {
-  flex-grow: 1;
-  padding: 8px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-}
-
-.send-request-button {
-  padding: 8px 16px;
-  border-radius: 6px;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  cursor: pointer;
-  min-width: 100px;
-}
-
-/* Область запроса */
-.request-body textarea {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  font-family: monospace;
-  resize: vertical;
-  min-height: 60px;
-}
-
-/* Область ответа */
-.response-area {
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  overflow: hidden;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.response-area-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 12px;
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.response-code {
-  padding: 4px 8px;
-  border-radius: 9999px;
-  font-size: 12px;
-}
-
-.response-code.success {
-  background-color: #ecfdf5;
-  color: #047857;
-}
-
-.response-code.error {
-  background-color: #fef2f2;
-  color: #b91c1c;
-}
-
-.response-body {
-  flex: 1;
-  overflow: auto;
-  padding: 12px;
-  font-family: monospace;
-  font-size: 13px;
-  background-color: #f9fafb;
-}
-
-/* База данных */
-.database-view {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.database-view-header {
-  padding: 8px 12px;
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.database-view-header h3 {
-  margin: 0;
-  font-size: 14px;
   font-weight: 500;
-  color: #3b82f6;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.database-tab.active {
+  color: var(--primary-color);
+  background-color: white;
+}
+
+.database-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+.database-tab:hover:not(.active) {
+  background-color: #e2e8f0;
 }
 
 .database-view-content {
   flex: 1;
   overflow: auto;
-  padding: 8px;
+  padding: 1rem;
 }
 
-/* Подсветка JSON */
+/* Стили для кнопки следующего упражнения */
+.next-exercise {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.next-exercise-button {
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.next-exercise-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.next-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+/* Улучшенные стили для хлебных крошек */
+.breadcrumbs {
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.breadcrumbs a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+  .full-width-page {
+    padding: 1rem;
+  }
+  
+  .rest-api-simulator {
+    padding: 0.75rem;
+  }
+  
+  .task-column,
+  .solution-column,
+  .data-column {
+    padding: 0.75rem;
+  }
+}
+
+
+
+/* Подсветка JSON в ответе */
 .json-key { color: #8b5cf6; }
 .json-string { color: #10b981; }
 .json-number { color: #3b82f6; }
 .json-boolean { color: #f59e0b; }
 .json-null { color: #ef4444; }
-
-/* Медиа-запросы для адаптивности */
-@media (max-width: 768px) {
-  .method-selector {
-    flex-wrap: wrap;
-  }
-  
-  .send-request-button {
-    margin-top: 8px;
-    width: 100%;
-  }
-}
