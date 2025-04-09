@@ -1,13 +1,27 @@
-// src/components/RestApiSimulator/RestApiSimulator.js (обновленный)
+// src/components/RestApiSimulator/RestApiSimulator.js (с react-resizable-panels)
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import './RestApiSimulator.css';
 import Spinner from '../common/Spinner';
 import TaskDescription from './TaskDescription';
 import SolutionPanel from './SolutionPanel';
-import DataTableViewer from './DataTableViewer'; // Импортируем новый компонент
-import { getEtalonsUsers } from '../../services/api';
+import DataTableViewer from './DataTableViewer'; 
 import SchemaViewer from './SchemaViewer';
+import { 
+  Panel, 
+  PanelGroup, 
+  PanelResizeHandle 
+} from "react-resizable-panels";
+import { getEtalonsUsers } from '../../services/api';
+
+// Компонент для разделителя панелей
+const ResizeHandle = () => (
+  <PanelResizeHandle>
+    <div className="panel-resize-handle">
+      <div className="handle-line"></div>
+    </div>
+  </PanelResizeHandle>
+);
 
 const RestApiSimulator = () => {
   const { exerciseId, categoryId } = useParams();
@@ -15,7 +29,7 @@ const RestApiSimulator = () => {
   const [exerciseData, setExerciseData] = useState(null);
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [etalonsData, setEtalonsData] = useState(null); // Добавляем состояние для данных таблиц
+  const [etalonsData, setEtalonsData] = useState(null); 
   
   // Загрузка данных упражнения 
   useEffect(() => {
@@ -28,7 +42,6 @@ const RestApiSimulator = () => {
         console.log("Загружены эталонные данные:", etalonsTable);
         
         // Преобразуем данные в формат для компонента DataTableViewer
-        // Предполагаем, что ответ API уже имеет нужную структуру - объект с именами таблиц и массивами данных
         if (etalonsTable) {
           // Если в ответе уже объект с именованными таблицами, используем его как есть
           if (typeof etalonsTable === 'object' && !Array.isArray(etalonsTable)) {
@@ -102,44 +115,66 @@ const RestApiSimulator = () => {
       <h1>{exerciseData.title}</h1>
       
       <div className="rest-api-simulator">
-        <div className="simulator-layout">
+        <PanelGroup direction="horizontal">
           {/* Левая колонка с заданием */}
-          <div className="task-column">
-            <TaskDescription 
-              task={exerciseData.task} 
-              isCompleted={taskCompleted} 
-            />
-          </div>
+          <Panel 
+            defaultSize={25} 
+            minSize={15}
+            className="task-panel"
+          >
+            <div className="task-column">
+              <TaskDescription 
+                task={exerciseData.task} 
+                isCompleted={taskCompleted} 
+              />
+            </div>
+          </Panel>
+          
+          <ResizeHandle />
           
           {/* Центральная колонка с решением */}
-          <div className="solution-column">
-            <SolutionPanel 
-              onTaskComplete={handleTaskCompletion}
-              onSendRequest={handleSendRequest}
-            />
-          </div>
+          <Panel 
+            defaultSize={50} 
+            minSize={30}
+            className="solution-panel"
+          >
+            <div className="solution-column">
+              <SolutionPanel 
+                onTaskComplete={handleTaskCompletion}
+                onSendRequest={handleSendRequest}
+              />
+            </div>
+          </Panel>
+          
+          <ResizeHandle />
 
           {/* Правая колонка со схемой БД */}
-          <div className="data-column">
-            {etalonsData && (
-              <div className="database-view">
-                <div className="database-view-header">
-                  <h3>База данных</h3>
-                </div>
-                <div className="database-view-content">
-                  {/* Схема БД */}
-                  <div className="database-view-schema">
-                    <SchemaViewer tables={etalonsData} />
+          <Panel 
+            defaultSize={25} 
+            minSize={15}
+            className="data-panel"
+          >
+            <div className="data-column">
+              {etalonsData && (
+                <div className="database-view">
+                  <div className="database-view-header">
+                    <h3>База данных</h3>
                   </div>
-                  {/* Таблица с данными */}
-                  <div className="database-view-data">
-                    <DataTableViewer tables={etalonsData} />
+                  <div className="database-view-content">
+                    {/* Схема БД */}
+                    <div className="database-view-schema">
+                      <SchemaViewer tables={etalonsData} />
+                    </div>
+                    {/* Таблица с данными */}
+                    <div className="database-view-data">
+                      <DataTableViewer tables={etalonsData} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </div>
+              )}
+            </div>
+          </Panel>
+        </PanelGroup>
       </div>
     </div>
   );

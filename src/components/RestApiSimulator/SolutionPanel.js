@@ -1,6 +1,5 @@
 // src/components/RestApiSimulator/SolutionPanel.js
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import './RestApiSimulator.css';
 import Spinner from '../common/Spinner';
 
@@ -36,9 +35,9 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
     
     try {
       // Имитация задержки запроса
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      // Определяем тип ответа
+      // Определение ответа в зависимости от запроса
       let responseData = {};
       let status = '200 OK';
       
@@ -88,20 +87,11 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
         status = '400 Bad Request';
       } else {
         responseData = {
-          data: {},
-          message: `${method} запрос к ${url} выполнен`
+          error: "Ресурс не найден",
+          details: `Маршрут ${method} ${url} не существует`
         };
+        status = '404 Not Found';
       }
-      
-      // Метаданные
-      responseData = {
-        ...responseData,
-        meta: {
-          method: method,
-          url: url,
-          timestamp: new Date().toISOString()
-        }
-      };
       
       // Устанавливаем статус ответа
       setResponseStatus(status);
@@ -140,95 +130,88 @@ const SolutionPanel = ({ onTaskComplete, onSendRequest }) => {
 
   return (
     <div className="solution-column">
-      <div className="api-interface">
-        <h3>Решение</h3>
-        <div className="method-selector">
-          <select 
-            value={method} 
-            onChange={(e) => setMethod(e.target.value)}
-            aria-label="HTTP метод"
-          >
-            <option value="GET">GET</option>
-            <option value="POST">POST</option>
-            <option value="PUT">PUT</option>
-            <option value="DELETE">DELETE</option>
-            <option value="PATCH">PATCH</option>
-          </select>
-          
-          <input 
-            type="text" 
-            placeholder="URL запроса, например: /api/users/1" 
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            aria-label="URL запроса"
-          />
-          
-          <button 
-            className="send-request-button" 
-            onClick={handleSendRequest}
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <Spinner size="small" text="" />
-                <span>Отправка...</span>
-              </>
-            ) : "Отправить запрос"}
-          </button>
-        </div>
+      <div className="method-selector">
+        <select 
+          value={method} 
+          onChange={(e) => setMethod(e.target.value)}
+          aria-label="HTTP метод"
+        >
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+          <option value="PATCH">PATCH</option>
+        </select>
         
+        <input 
+          type="text" 
+          placeholder="/api/users/1" 
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          aria-label="URL запроса"
+        />
+        
+        <button 
+          className="send-request-button" 
+          onClick={handleSendRequest}
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Spinner size="small" text="" />
+              <span>Отправка...</span>
+            </>
+          ) : "Отправить"}
+        </button>
+      </div>
+      
+      {method !== 'GET' && (
         <div className="request-body">
-          <h3>Тело запроса</h3>
           <textarea 
-            placeholder={method === 'GET' ? 
-              "GET запросы не имеют тела" : 
-              '{\n  "name": "Имя",\n  "email": "email@example.com"\n}'} 
-            rows="4"
+            placeholder={
+              '{\n  "name": "Имя",\n  "email": "email@example.com"\n}'
+            } 
+            rows="3"
             value={requestBody}
             onChange={(e) => setRequestBody(e.target.value)}
             disabled={method === 'GET'}
             aria-label="Тело запроса"
           ></textarea>
         </div>
-        
-        {showResponse && (
-          <div className="response-area">
-            <div className="response-area-header">
-              <h3>Ответ сервера</h3>
-              {responseStatus && (
-                <div className={`response-code ${
-                  responseStatus.startsWith('2') ? 'success' : 'error'
-                }`}>
-                  <div className="response-code-status">
-                    {responseStatus}
-                  </div>
+      )}
+      
+      {showResponse && (
+        <div className="response-area">
+          <div className="response-area-header">
+            <h3>Ответ сервера</h3>
+            {responseStatus && (
+              <div className={`response-code ${
+                responseStatus.startsWith('2') ? 'success' : 'error'
+              }`}>
+                <div className="response-code-status">
+                  {responseStatus}
                 </div>
-              )}
-            </div>
-            
-            {loading ? (
-              <div className="response-loading">
-                <Spinner size="medium" text="Получение ответа..." />
-              </div>
-            ) : (
-              <div className="response-body">
-                {responseBody ? (
-                  <div dangerouslySetInnerHTML={{ __html: formatJsonSyntax(responseBody) }} />
-                ) : (
-                  <div className="no-response">Нет данных</div>
-                )}
               </div>
             )}
           </div>
-        )}
-      </div>
+          
+          {loading ? (
+            <div className="response-loading">
+              <Spinner size="medium" text="Получение ответа..." />
+            </div>
+          ) : (
+            <div className="response-body">
+              {responseBody ? (
+                <div dangerouslySetInnerHTML={{ __html: formatJsonSyntax(responseBody) }} />
+              ) : (
+                <div className="no-response">Нет данных</div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
-};
-
-SolutionPanel.propTypes = {
-  onTaskComplete: PropTypes.func.isRequired,
-  onSendRequest: PropTypes.func
 };
 
 export default SolutionPanel;

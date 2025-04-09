@@ -1,349 +1,160 @@
-/* Основные стили для REST API симулятора */
+/* Оптимизированный RestApiSimulator.css */
+
+/* Основной контейнер */
 .full-width-page {
-  max-width: 100% !important;
-  padding: 20px 30px;
-  height: calc(100vh - 100px); /* Учитываем высоту навбара и отступы */
+  max-width: 100%;
+  padding: 10px 20px;
+  height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
 }
 
 .rest-api-simulator {
   background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  padding: 24px;
-  margin-bottom: 30px;
-  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  padding: 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0; /* Важно для работы flex-scroll */
+  overflow: hidden;
 }
 
-/* Заголовки */
-.rest-api-simulator h2 {
-  color: #2563eb;
-  font-size: 22px;
-  margin-bottom: 16px;
-  font-weight: 600;
+/* Стили для разделителей панелей */
+.panel-resize-handle {
+  width: 5px;
+  background-color: #f3f4f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: col-resize;
+  transition: background-color 0.2s ease;
 }
 
-.rest-api-simulator h3 {
-  color: #374151;
-  font-size: 18px;
-  margin-bottom: 12px;
-  font-weight: 600;
+.handle-line {
+  width: 1px;
+  height: 24px;
+  background-color: #d1d5db;
 }
 
-.rest-api-simulator p {
-  color: #4b5563;
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 16px;
-}
-
-/* Селектор метода и URL */
-.api-controls {
-  margin-bottom: 20px;
+/* Стили для панелей */
+.task-column,
+.solution-column,
+.data-column {
+  padding: 8px;
+  height: 100%;
   width: 100%;
+  overflow: auto;
 }
 
+/* Компонент задания */
+.task-container {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.task-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.task-toggle {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.task-content {
+  padding: 12px;
+}
+
+.task-completed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background-color: #f0fdf4;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+
+.task-completed-icon {
+  width: 18px;
+  height: 18px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Панель решения */
 .method-selector {
   display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-bottom: 8px;
   align-items: center;
-  width: 100%;
 }
 
 .method-selector select {
-  padding: 12px 16px;
+  padding: 8px 10px;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  border-radius: 6px;
   background-color: #f3f4f6;
-  font-weight: 600;
-  cursor: pointer;
-  color: #2563eb;
-  min-width: 130px;
-  max-width: 130px;
-  transition: all 0.2s ease;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232563eb'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 40px;
-}
-
-.method-selector select:hover, 
-.method-selector select:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  color: #3b82f6;
+  min-width: 90px;
 }
 
 .method-selector input {
   flex-grow: 1;
-  padding: 12px 16px;
+  padding: 8px 10px;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  font-size: 15px;
-  color: #111827;
-  transition: all 0.2s ease;
+  border-radius: 6px;
 }
 
-.method-selector input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  outline: none;
-}
-
-.method-selector input::placeholder {
-  color: #9ca3af;
-}
-
-/* Кнопка отправки */
 .send-request-button {
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 15px;
-  background: #2563eb;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #3b82f6;
   color: white;
   border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-width: 160px;
-  max-width: 160px;
-}
-
-.send-request-button:hover {
-  background: #1d4ed8;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
-}
-
-.send-request-button:active {
-  transform: translateY(0);
-}
-
-.send-request-button:disabled {
-  background: #93c5fd;
-  transform: none;
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-/* Расположение задания и решения */
-.simulator-layout {
-  display: grid;
-  grid-template-columns: 350px 1fr 450px;
-  gap: 24px;
-  width: 100%;
-  flex: 1;
-  min-height: 0; /* Важно для работы flex-scroll */
-}
-
-/* Левая колонка с заданием */
-.task-column {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  overflow-y: auto;
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 20px;
-}
-
-/* Центральная колонка с решением */
-.solution-column {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-width: 0; /* Важно для работы flex-scroll */
-}
-
-/* Правая колонка с таблицей */
-.data-column {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow: hidden;
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  padding: 0;
-}
-
-/* Компонент задания */
-.exercise-task {
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 12px;
-  border-left: 4px solid #2563eb;
+  min-width: 100px;
 }
 
 /* Область запроса */
-.request-body {
-  margin-bottom: 16px;
-}
-
 .request-body textarea {
   width: 100%;
-  padding: 12px;
+  padding: 8px 10px;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  font-family: 'JetBrains Mono', 'Consolas', monospace;
-  font-size: 14px;
-  line-height: 1.6;
+  border-radius: 6px;
+  font-family: monospace;
   resize: vertical;
-  height: 100px;
-  min-height: 100px;
-  max-height: 200px;
-  transition: all 0.2s ease;
-  background-color: #ffffff;
-}
-
-/* Таблица с данными */
-.data-tables-wrapper {
-  height: 100%;
-  overflow: auto;
-  padding: 0;
-}
-
-.data-table-section {
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.data-table-section:last-child {
-  border-bottom: none;
-}
-
-.data-table-toggle {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background: #ffffff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.data-table-toggle:hover {
-  background: #f9fafb;
-}
-
-.data-table-toggle-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.data-table-toggle h4 {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: #374151;
-}
-
-.data-table-count {
-  font-size: 11px;
-  color: #6b7280;
-  background: #f3f4f6;
-  padding: 2px 8px;
-  border-radius: 12px;
-}
-
-.data-table-toggle-icon {
-  color: #9ca3af;
-  transition: transform 0.2s ease;
-}
-
-.data-table-section.expanded .data-table-toggle-icon {
-  transform: rotate(180deg);
-}
-
-.data-table-container {
-  overflow: auto;
-  max-height: 250px;
-  border-top: 1px solid #e5e7eb;
-}
-
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.data-table th {
-  position: sticky;
-  top: 0;
-  background: #f8fafc;
-  padding: 8px 16px;
-  text-align: left;
-  font-weight: 500;
-  color: #4b5563;
-  border-bottom: 1px solid #e5e7eb;
-  white-space: nowrap;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  z-index: 1;
-}
-
-.data-table td {
-  padding: 6px 16px;
-  border: none;
-  color: #374151;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
-.data-table tbody tr:nth-child(even) {
-  background: #f9fafb;
-}
-
-.data-table tbody tr:hover td {
-  background: #f3f4f6;
-}
-
-/* Стили для разных типов данных */
-.data-table td.number {
-  font-family: 'JetBrains Mono', monospace;
-  color: #2563eb;
-}
-
-.data-table td.boolean {
-  color: #059669;
-  font-weight: 500;
-}
-
-.data-table td.null {
-  color: #9ca3af;
-  font-style: italic;
-}
-
-.data-table td.datetime {
-  color: #7c3aed;
-  font-size: 12px;
+  min-height: 60px;
 }
 
 /* Область ответа */
 .response-area {
-  padding: 16px;
-  background-color: #ffffff;
-  border-radius: 12px;
   border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
   flex: 1;
-  min-height: 0;
   display: flex;
   flex-direction: column;
 }
@@ -352,206 +163,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  padding: 8px 12px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .response-code {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
 }
 
 .response-code.success {
-  background-color: #dcfce7;
-  color: #16a34a;
+  background-color: #ecfdf5;
+  color: #047857;
 }
 
 .response-code.error {
-  background-color: #fee2e2;
-  color: #dc2626;
-}
-
-.response-code.neutral {
-  background-color: #e0f2fe;
-  color: #0284c7;
-}
-
-.response-code-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.response-code-status::before {
-  content: "•";
-  font-size: 24px;
+  background-color: #fef2f2;
+  color: #b91c1c;
 }
 
 .response-body {
-  background-color: #ffffff;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  font-family: 'JetBrains Mono', 'Consolas', monospace;
-  white-space: pre-wrap;
-  overflow-x: auto;
-  line-height: 1.6;
-  font-size: 14px;
-  color: #111827;
   flex: 1;
-  overflow-y: auto;
-  max-height: 300px;
-}
-
-/* Задание */
-.task-description {
-  color: #4b5563;
-  line-height: 1.6;
-  font-size: 15px;
-}
-
-.task-description ol {
-  margin-left: 20px;
-  padding-left: 15px;
-}
-
-.task-description li {
-  margin-bottom: 10px;
-  position: relative;
-}
-
-.task-description li::marker {
-  color: #2563eb;
-  font-weight: bold;
-}
-
-/* Спиннер в области ответа */
-.response-loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 150px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 10px;
-}
-
-/* JSON с подсветкой синтаксиса */
-.json-key {
-  color: #8b5cf6;
-}
-
-.json-string {
-  color: #10b981;
-}
-
-.json-number {
-  color: #3b82f6;
-}
-
-.json-boolean {
-  color: #f59e0b;
-}
-
-.json-null {
-  color: #ef4444;
-}
-
-/* Индикатор успешного выполнения */
-.task-completed {
-  background-color: #dcfce7;
-  color: #16a34a;
-  padding: 14px;
-  border-radius: 10px;
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.task-completed-icon {
-  width: 24px;
-  height: 24px;
-  background-color: #16a34a;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.task-completed-message {
-  font-weight: 500;
-  font-size: 15px;
-}
-
-/* Адаптивность */
-@media (max-width: 1400px) {
-  .simulator-layout {
-    grid-template-columns: 300px 1fr 400px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .simulator-layout {
-    grid-template-columns: 1fr;
-  }
-  
-  .task-column,
-  .solution-column,
-  .data-column {
-    width: 100%;
-  }
-  
-  .task-column {
-    max-height: 200px;
-  }
-
-  .data-column {
-    height: 600px;
-  }
-
-  .database-view-schema {
-    height: 400px;
-  }
-}
-
-@media (max-width: 768px) {
-  .full-width-page {
-    padding: 16px;
-  }
-  
-  .rest-api-simulator {
-    padding: 16px;
-  }
-  
-  .method-selector {
-    flex-direction: column;
-  }
-  
-  .method-selector select,
-  .send-request-button {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-/* Контейнер схемы БД */
-.schema-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  height: 100%;
-}
-
-.schema-container h3 {
-  margin: 0;
-  padding: 0;
+  overflow: auto;
+  padding: 12px;
+  font-family: monospace;
+  font-size: 13px;
+  background-color: #f9fafb;
 }
 
 /* База данных */
@@ -562,119 +201,39 @@
 }
 
 .database-view-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
+  padding: 8px 12px;
+  background-color: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
-  background: #f8fafc;
 }
 
 .database-view-header h3 {
   margin: 0;
   font-size: 14px;
-  font-weight: 600;
-  color: #374151;
+  font-weight: 500;
+  color: #3b82f6;
 }
 
 .database-view-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  height: calc(100% - 44px); /* Вычитаем высоту заголовка */
-  min-height: 0; /* Важно для работы scroll */
-}
-
-.database-view-schema {
   flex: 1;
-  min-height: 0;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  overflow: hidden;
+  overflow: auto;
+  padding: 8px;
 }
 
-.database-view-data {
-  background: #ffffff;
-  height: auto;
-  max-height: 300px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
+/* Подсветка JSON */
+.json-key { color: #8b5cf6; }
+.json-string { color: #10b981; }
+.json-number { color: #3b82f6; }
+.json-boolean { color: #f59e0b; }
+.json-null { color: #ef4444; }
 
-/* Обновляем стили для схемы */
-.schema-viewer {
-  height: 100%;
-  background: #ffffff;
-  overflow: hidden;
-}
-
-.schema-content {
-  padding: 24px;
-  min-width: 600px;
-  min-height: 400px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.schema-table {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  min-width: 240px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.schema-table-header {
-  padding: 12px 16px;
-  background: #f8fafc;
-  border-bottom: 1px solid #e5e7eb;
-  border-radius: 8px 8px 0 0;
-}
-
-.schema-table-name {
-  font-weight: 600;
-  color: #374151;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.schema-table-body {
-  padding: 8px 0;
-}
-
-.schema-table-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 16px;
-  font-size: 13px;
-  color: #4b5563;
-}
-
-.schema-table-row:hover {
-  background: #f9fafb;
-}
-
-.schema-column-name {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.schema-column-type {
-  color: #2563eb;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-}
-
-/* Адаптивность */
-@media (max-width: 1400px) {
-  .simulator-layout {
-    grid-template-columns: 300px 1fr 400px;
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+  .method-selector {
+    flex-wrap: wrap;
+  }
+  
+  .send-request-button {
+    margin-top: 8px;
+    width: 100%;
   }
 }

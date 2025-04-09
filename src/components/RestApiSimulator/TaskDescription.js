@@ -1,39 +1,41 @@
 // src/components/RestApiSimulator/TaskDescription.js
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import './RestApiSimulator.css';
 
 const TaskDescription = ({ task, isCompleted }) => {
+  const [expanded, setExpanded] = useState(true);
+
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  };
+
   return (
-    <div className="task-column">
-      <div className="exercise-task">
-        <h2>Задание</h2>
-        <div className="task-description">
-          <ol>
-            <li>{task}</li>
-          </ol>
-        </div>
-        
-        {isCompleted && (
-          <div className="task-completed">
-            <div className="task-completed-icon">✓</div>
-            <div className="task-completed-message">
-              Задание выполнено успешно!
-            </div>
-          </div>
-        )}
+    <div className="task-container">
+      <div className="task-header" onClick={toggleExpanded}>
+        <h3 className="task-title">Задание</h3>
+        <button className="task-toggle">
+          {expanded ? '−' : '+'}
+        </button>
       </div>
+      
+      {expanded && (
+        <div className="task-content">
+          <div className="task-description">
+            {task}
+          </div>
+          
+          {isCompleted && (
+            <div className="task-completed">
+              <div className="task-completed-icon">✓</div>
+              <span className="task-completed-message">
+                Задание выполнено!
+              </span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
-};
-
-TaskDescription.propTypes = {
-  task: PropTypes.string.isRequired,
-  isCompleted: PropTypes.bool
-};
-
-TaskDescription.defaultProps = {
-  isCompleted: false
 };
 
 export default TaskDescription;
