@@ -30,7 +30,10 @@ const API_REG_USERS = "/register",
       API_CHECK_EMAIL = `${API_REG_USERS}/check-email`,
       API_LOGIN = "/auth/login",
       API_GET_TYPE_OF_TASKS='/tasks/tables',
-      API_GET__TASKS_FROM_TYPE = '/tasks/table/';
+      API_GET__TASKS_FROM_TYPE = '/tasks/table/',
+      API_GET_ETALONS_USERS = '/etalons/users/',
+      API_GET_ETALONS_BOOKS ='/etalons/books/',
+      API_GET_ETALONS_FLIGHTS ='/etalons/flights/';
 
 // Функция для проверки существования email
 export const checkEmailExists = async (email) => {
@@ -91,6 +94,42 @@ export const getTablesTasks = async (categoryType) => {
     
   } catch (error) {
     console.error(`Ошибка при получении упражнений для типа ${categoryType}:`, error);
+    throw error;
+  }
+};
+
+export const getEtalonsUsers = async () => {
+  try {
+    // Используем правильный путь API с параметром типа категории
+    const response = await api.get(`${API_GET_ETALONS_USERS}`);
+    return response.data;
+    
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getEtalonsBooks = async () => {
+  try {
+    // Используем правильный путь API с параметром типа категории
+    const response = await api.get(`${API_GET_ETALONS_BOOKS}`);
+    return response.data;
+    
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getEtalonsFlights = async () => {
+  try {
+    // Используем правильный путь API с параметром типа категории
+    const response = await api.get(`${API_GET_ETALONS_FLIGHTS}`);
+    return response.data;
+    
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 };

@@ -5,6 +5,7 @@ import './RestApiSimulator.css';
 import Spinner from '../common/Spinner';
 import TaskDescription from './TaskDescription';
 import SolutionPanel from './SolutionPanel';
+import { getEtalonsUsers } from '../../services/api';
 
 const RestApiSimulator = () => {
   const { exerciseId, categoryId } = useParams();
@@ -17,6 +18,9 @@ const RestApiSimulator = () => {
   useEffect(() => {
     const loadExerciseData = async () => {
       setLoading(true);
+
+        const etalonsTable = await getEtalonsUsers();
+        console.log(etalonsTable);
       
       try {
         // Если данные были переданы через навигацию
