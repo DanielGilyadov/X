@@ -1,10 +1,11 @@
-// src/components/RestApiSimulator/RestApiSimulator.js
+// src/components/RestApiSimulator/RestApiSimulator.js (обновленный)
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import './RestApiSimulator.css';
 import Spinner from '../common/Spinner';
 import TaskDescription from './TaskDescription';
 import SolutionPanel from './SolutionPanel';
+import DataTableViewer from './DataTableViewer'; // Импортируем новый компонент
 import { getEtalonsUsers } from '../../services/api';
 
 const RestApiSimulator = () => {
@@ -13,16 +14,31 @@ const RestApiSimulator = () => {
   const [exerciseData, setExerciseData] = useState(null);
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [etalonsData, setEtalonsData] = useState(null); // Добавляем состояние для данных таблиц
   
   // Загрузка данных упражнения 
   useEffect(() => {
     const loadExerciseData = async () => {
       setLoading(true);
 
-        const etalonsTable = await getEtalonsUsers();
-        console.log(etalonsTable);
-      
       try {
+        // Загружаем эталонные данные таблиц
+        const etalonsTable = await getEtalonsUsers();
+        console.log("Загружены эталонные данные:", etalonsTable);
+        
+        // Преобразуем данные в формат для компонента DataTableViewer
+        // Предполагаем, что ответ API уже имеет нужную структуру - объект с именами таблиц и массивами данных
+        if (etalonsTable) {
+          // Если в ответе уже объект с именованными таблицами, используем его как есть
+          if (typeof etalonsTable === 'object' && !Array.isArray(etalonsTable)) {
+            setEtalonsData(etalonsTable);
+          } 
+          // Если в ответе массив, создаем объект с одной таблицей "users"
+          else if (Array.isArray(etalonsTable)) {
+            setEtalonsData({ 'users': etalonsTable });
+          }
+        }
+        
         // Если данные были переданы через навигацию
         if (location.state?.exerciseId) {
           setExerciseData({
@@ -93,11 +109,17 @@ const RestApiSimulator = () => {
               isCompleted={taskCompleted} 
             />
             
-            {/* Компонент решения */}
-            <SolutionPanel 
-              onTaskComplete={handleTaskCompletion}
-              onSendRequest={handleSendRequest}
-            />
+            {/* Правая колонка с решением и данными */}
+            <div className="solution-column">
+              {/* Добавляем компонент для отображения таблиц */}
+              {etalonsData && <DataTableViewer tables={etalonsData} />}
+              
+              {/* Компонент решения */}
+              <SolutionPanel 
+                onTaskComplete={handleTaskCompletion}
+                onSendRequest={handleSendRequest}
+              />
+            </div>
           </div>
         </div>
       </div>

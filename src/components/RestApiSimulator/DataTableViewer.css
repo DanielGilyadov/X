@@ -1,0 +1,134 @@
+/* src/components/RestApiSimulator/DataTableViewer.css */
+.data-tables-container {
+    background-color: #f0f9ff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e0f2fe;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .data-tables-title {
+    color: #0284c7;
+    font-size: 18px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #bae6fd;
+    padding-bottom: 8px;
+  }
+  
+  .data-table-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  
+  .data-table-header {
+    background-color: #e0f2fe;
+    padding: 10px 16px;
+    border-bottom: 1px solid #bae6fd;
+  }
+  
+  .data-table-name {
+    color: #0369a1;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  
+  .data-table-name::before {
+    content: '📋';
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  .data-table-content {
+    padding: 0;
+    overflow-x: auto;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .data-table th, 
+  .data-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .data-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #334155;
+    position: sticky;
+    top: 0;
+  }
+  
+  .data-table tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+  
+  .data-table tr:hover {
+    background-color: #f0f9ff;
+  }
+  
+  .data-table td {
+    color: #1e293b;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .data-table-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    color: #94a3b8;
+    text-align: center;
+  }
+  
+  .data-table-empty-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+  
+  /* Стили для прокрутки таблицы */
+  .data-table-content::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  
+  .data-table-content::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+  }
+  
+  .data-table-content::-webkit-scrollbar-track {
+    background-color: #f1f5f9;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .data-tables-container {
+      padding: 15px;
+    }
+    
+    .data-table th, 
+    .data-table td {
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+  }

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import './Pages.css';
 import './ExercisesMenu.css'; // Подключаем новый CSS файл
-import { getTablesTasks, getEtalonsUsers } from '../services/api';
+import { getTablesTasks } from '../services/api';
 import Spinner from '../components/common/Spinner';
 
 const ExercisesMenu = () => {
