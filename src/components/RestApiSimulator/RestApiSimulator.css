@@ -2,15 +2,22 @@
 .full-width-page {
   max-width: 100% !important;
   padding: 20px 30px;
+  height: calc(100vh - 100px); /* Учитываем высоту навбара и отступы */
+  display: flex;
+  flex-direction: column;
 }
 
 .rest-api-simulator {
   background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  padding: 28px;
+  padding: 24px;
   margin-bottom: 30px;
   width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Важно для работы flex-scroll */
 }
 
 /* Заголовки */
@@ -132,46 +139,213 @@
   cursor: not-allowed;
 }
 
+/* Расположение задания и решения */
+.simulator-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr 450px;
+  gap: 24px;
+  width: 100%;
+  flex: 1;
+  min-height: 0; /* Важно для работы flex-scroll */
+}
+
+/* Левая колонка с заданием */
+.task-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Центральная колонка с решением */
+.solution-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0; /* Важно для работы flex-scroll */
+}
+
+/* Правая колонка с таблицей */
+.data-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 0;
+}
+
+/* Компонент задания */
+.exercise-task {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 4px solid #2563eb;
+}
+
 /* Область запроса */
 .request-body {
-  margin-top: 20px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .request-body textarea {
   width: 100%;
-  padding: 16px;
+  padding: 12px;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   font-family: 'JetBrains Mono', 'Consolas', monospace;
   font-size: 14px;
   line-height: 1.6;
   resize: vertical;
-  min-height: 110px;
+  height: 100px;
+  min-height: 100px;
+  max-height: 200px;
   transition: all 0.2s ease;
-  background-color: #f9fafb;
+  background-color: #ffffff;
 }
 
-.request-body textarea:focus {
-  border-color: #2563eb;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-  background-color: #fff;
+/* Таблица с данными */
+.data-tables-wrapper {
+  height: 100%;
+  overflow: auto;
+  padding: 0;
 }
 
-.request-body textarea:disabled {
-  background-color: #f3f4f6;
+.data-table-section {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table-section:last-child {
+  border-bottom: none;
+}
+
+.data-table-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.data-table-toggle:hover {
+  background: #f9fafb;
+}
+
+.data-table-toggle-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.data-table-toggle h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.data-table-count {
+  font-size: 11px;
   color: #6b7280;
-  cursor: not-allowed;
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.data-table-toggle-icon {
+  color: #9ca3af;
+  transition: transform 0.2s ease;
+}
+
+.data-table-section.expanded .data-table-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.data-table-container {
+  overflow: auto;
+  max-height: 250px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.data-table th {
+  position: sticky;
+  top: 0;
+  background: #f8fafc;
+  padding: 8px 16px;
+  text-align: left;
+  font-weight: 500;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 1;
+}
+
+.data-table td {
+  padding: 6px 16px;
+  border: none;
+  color: #374151;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.data-table tbody tr:hover td {
+  background: #f3f4f6;
+}
+
+/* Стили для разных типов данных */
+.data-table td.number {
+  font-family: 'JetBrains Mono', monospace;
+  color: #2563eb;
+}
+
+.data-table td.boolean {
+  color: #059669;
+  font-weight: 500;
+}
+
+.data-table td.null {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.data-table td.datetime {
+  color: #7c3aed;
+  font-size: 12px;
 }
 
 /* Область ответа */
 .response-area {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f9fafb;
+  padding: 16px;
+  background-color: #ffffff;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .response-area-header {
@@ -219,8 +393,8 @@
 
 .response-body {
   background-color: #ffffff;
-  padding: 18px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid #e5e7eb;
   font-family: 'JetBrains Mono', 'Consolas', monospace;
   white-space: pre-wrap;
@@ -228,34 +402,12 @@
   line-height: 1.6;
   font-size: 14px;
   color: #111827;
-  max-height: 350px;
+  flex: 1;
   overflow-y: auto;
+  max-height: 300px;
 }
 
 /* Задание */
-.exercise-task {
-  background: #f0f9ff;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border-left: 4px solid #2563eb;
-}
-
-/* Расположение задания и решения */
-.simulator-layout {
-  display: flex;
-  gap: 24px;
-  width: 100%;
-}
-
-.simulator-layout .task-column {
-  flex: 0 0 30%;
-}
-
-.simulator-layout .solution-column {
-  flex: 1;
-}
-
 .task-description {
   color: #4b5563;
   line-height: 1.6;
@@ -339,40 +491,190 @@
 }
 
 /* Адаптивность */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .simulator-layout {
-    flex-direction: column;
-  }
-  
-  .simulator-layout .task-column,
-  .simulator-layout .solution-column {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-  
-  .send-request-button {
-    max-width: none;
+    grid-template-columns: 300px 1fr 400px;
   }
 }
 
-@media (max-width: 840px) {
+@media (max-width: 1200px) {
+  .simulator-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .task-column,
+  .solution-column,
+  .data-column {
+    width: 100%;
+  }
+  
+  .task-column {
+    max-height: 200px;
+  }
+
+  .data-column {
+    height: 600px;
+  }
+
+  .database-view-schema {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .full-width-page {
+    padding: 16px;
+  }
+  
   .rest-api-simulator {
-    padding: 20px;
+    padding: 16px;
   }
   
   .method-selector {
     flex-direction: column;
-    align-items: stretch;
   }
   
-  .method-selector select {
-    width: 100%;
-    max-width: none;
-  }
-  
+  .method-selector select,
   .send-request-button {
     width: 100%;
-    margin-top: 12px;
     max-width: none;
+  }
+}
+
+/* Контейнер схемы БД */
+.schema-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.schema-container h3 {
+  margin: 0;
+  padding: 0;
+}
+
+/* База данных */
+.database-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.database-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.database-view-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.database-view-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  height: calc(100% - 44px); /* Вычитаем высоту заголовка */
+  min-height: 0; /* Важно для работы scroll */
+}
+
+.database-view-schema {
+  flex: 1;
+  min-height: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.database-view-data {
+  background: #ffffff;
+  height: auto;
+  max-height: 300px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Обновляем стили для схемы */
+.schema-viewer {
+  height: 100%;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.schema-content {
+  padding: 24px;
+  min-width: 600px;
+  min-height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.schema-table {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  min-width: 240px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.schema-table-header {
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 8px 8px 0 0;
+}
+
+.schema-table-name {
+  font-weight: 600;
+  color: #374151;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.schema-table-body {
+  padding: 8px 0;
+}
+
+.schema-table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.schema-table-row:hover {
+  background: #f9fafb;
+}
+
+.schema-column-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.schema-column-type {
+  color: #2563eb;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+/* Адаптивность */
+@media (max-width: 1400px) {
+  .simulator-layout {
+    grid-template-columns: 300px 1fr 400px;
   }
 }

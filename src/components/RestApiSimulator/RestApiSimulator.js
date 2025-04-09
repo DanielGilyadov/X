@@ -7,6 +7,7 @@ import TaskDescription from './TaskDescription';
 import SolutionPanel from './SolutionPanel';
 import DataTableViewer from './DataTableViewer'; // Импортируем новый компонент
 import { getEtalonsUsers } from '../../services/api';
+import SchemaViewer from './SchemaViewer';
 
 const RestApiSimulator = () => {
   const { exerciseId, categoryId } = useParams();
@@ -101,25 +102,42 @@ const RestApiSimulator = () => {
       <h1>{exerciseData.title}</h1>
       
       <div className="rest-api-simulator">
-        <div className="api-controls">
-          <div className="simulator-layout">
-            {/* Компонент задания */}
+        <div className="simulator-layout">
+          {/* Левая колонка с заданием */}
+          <div className="task-column">
             <TaskDescription 
               task={exerciseData.task} 
               isCompleted={taskCompleted} 
             />
-            
-            {/* Правая колонка с решением и данными */}
-            <div className="solution-column">
-              {/* Добавляем компонент для отображения таблиц */}
-              {etalonsData && <DataTableViewer tables={etalonsData} />}
-              
-              {/* Компонент решения */}
-              <SolutionPanel 
-                onTaskComplete={handleTaskCompletion}
-                onSendRequest={handleSendRequest}
-              />
-            </div>
+          </div>
+          
+          {/* Центральная колонка с решением */}
+          <div className="solution-column">
+            <SolutionPanel 
+              onTaskComplete={handleTaskCompletion}
+              onSendRequest={handleSendRequest}
+            />
+          </div>
+
+          {/* Правая колонка со схемой БД */}
+          <div className="data-column">
+            {etalonsData && (
+              <div className="database-view">
+                <div className="database-view-header">
+                  <h3>База данных</h3>
+                </div>
+                <div className="database-view-content">
+                  {/* Схема БД */}
+                  <div className="database-view-schema">
+                    <SchemaViewer tables={etalonsData} />
+                  </div>
+                  {/* Таблица с данными */}
+                  <div className="database-view-data">
+                    <DataTableViewer tables={etalonsData} />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
