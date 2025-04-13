@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link, useSearchParams } from 'react-router-dom';
 import { Panel, PanelGroup } from 'react-resizable-panels';
-import { CheckIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 
 import './RestApiSimulator.css';
 import './EnhancedPanels.css';
@@ -34,7 +34,6 @@ const RestApiSimulator = () => {
   const [exerciseData, setExerciseData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [etalonsData, setEtalonsData] = useState(null);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [activeTab, setActiveTab] = useState('database');
 
   /**
@@ -138,20 +137,6 @@ const RestApiSimulator = () => {
         <Link to={`/exercises/${categoryId}`}>{getCategoryTitle()}</Link> / {exerciseData.taskText || `task${exerciseId}`}
       </div>
 
-      {/* Уведомление об успешном выполнении задания */}
-      {showSuccessMessage && (
-        <div className="success-notification">
-          <CheckIcon className="success-icon" />
-          <span>Отлично! Вы успешно выполнили задание!</span>
-          <button 
-            className="close-notification" 
-            onClick={() => setShowSuccessMessage(false)}
-          >
-            ×
-          </button>
-        </div>
-      )}
-
       {/* Основной контейнер симулятора */}
       <div className="rest-api-simulator panels-container">
         <PanelGroup direction="horizontal" className="panel-animation">
@@ -165,7 +150,6 @@ const RestApiSimulator = () => {
           </Panel>
 
           <EnhancedResizeHandle />
-
           {/* Панель решения */}
           <Panel defaultSize={45} minSize={30} className="panel solution-panel">
             <div className="panel-content solution-column">
@@ -174,7 +158,6 @@ const RestApiSimulator = () => {
               />
             </div>
           </Panel>
-
           <EnhancedResizeHandle />
 
           {/* Панель данных/схемы */}
@@ -208,16 +191,13 @@ const RestApiSimulator = () => {
             </div>
           </Panel>
         </PanelGroup>
-      </div>
-
-      {/* Кнопка перехода к следующему упражнению */}
-
         <div className="next-exercise">
           <button className="next-exercise-button">
             <span>Следующее упражнение</span>
             <ChevronRightIcon className="next-icon" />
           </button>
         </div>
+      </div>
       
     </div>
   );
