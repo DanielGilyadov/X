@@ -19,7 +19,7 @@ import DataTableViewer from './DataTableViewer';
 import SchemaViewer from './SchemaViewer';
 import EnhancedResizeHandle from './EnhancedPanelResizer';
 
-import { getEtalonsUsers, getRestSimpleRandomTasks } from '../../services/api';
+import { getEtalonsUsers, getRestSimpleRandomTasks, getEtalonsBooks, getEtalonsFlights } from '../../services/api';
 
 const RestApiSimulator = () => {
   const { exerciseId, categoryId } = useParams();
@@ -45,30 +45,44 @@ const RestApiSimulator = () => {
     const loadExercise = async () => {
       setLoading(true);
       try {
-        const etalonsTable = await getEtalonsUsers();
-
-        if (etalonsTable) {
-          const formattedData = Array.isArray(etalonsTable)
-            ? { users: etalonsTable }
-            : etalonsTable;
-          setEtalonsData(formattedData);
-        }
-
-
         if(difficulty === 'easy'){
           const task = await getRestSimpleRandomTasks();
           setExerciseData(task)
           console.log(task)
-        }
 
-        // if (location.state?.exerciseId) {
-        //   setExerciseData({
-        //     id: location.state.exerciseId,
-        //     title: location.state.exerciseTitle,
-        //     difficulty: location.state.difficulty,
-        //     task: 'Выполните GET запрос для получения данных пользователя с ID 1. Используйте URL /api/users/1',
-        //   });
-        // }
+          if(task.table === 'users'){
+            const etalonsTable = await getEtalonsUsers();
+
+            if (etalonsTable) {
+              const formattedData = Array.isArray(etalonsTable)
+                ? { users: etalonsTable }
+                : etalonsTable;
+              setEtalonsData(formattedData);
+            }
+
+          } else if (task.table === 'books'){
+            const etalonsTable = await getEtalonsBooks();
+
+            if (etalonsTable) {
+              const formattedData = Array.isArray(etalonsTable)
+                ? { users: etalonsTable }
+                : etalonsTable;
+              setEtalonsData(formattedData);
+            }
+
+          } else {
+
+            const etalonsTable = await getEtalonsFlights();
+
+            if (etalonsTable) {
+              const formattedData = Array.isArray(etalonsTable)
+                ? { users: etalonsTable }
+                : etalonsTable;
+              setEtalonsData(formattedData);
+            }
+          }
+
+        }
       } catch (error) {
         console.error('Ошибка при загрузке упражнения:', error);
       } finally {
