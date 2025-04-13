@@ -32,7 +32,6 @@ const RestApiSimulator = () => {
 
   // Состояния компонента
   const [exerciseData, setExerciseData] = useState(null);
-  const [taskCompleted, setTaskCompleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [etalonsData, setEtalonsData] = useState(null);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -109,21 +108,6 @@ const RestApiSimulator = () => {
   }, [exerciseId, location.state, difficulty]);
 
   /**
-   * Обработчик завершения задания
-   * @param {boolean} completed - Флаг завершения задания
-   */
-  const handleTaskCompletion = (completed) => {
-    setTaskCompleted(completed);
-    
-    // Показываем сообщение об успехе при завершении задания
-    if (completed && !showSuccessMessage) {
-      setShowSuccessMessage(true);
-      // Скрываем сообщение через 5 секунд
-      setTimeout(() => setShowSuccessMessage(false), 5000);
-    }
-  };
-
-  /**
    * Обработчик отправки запроса
    * @param {Object} requestData - Данные запроса
    */
@@ -176,7 +160,6 @@ const RestApiSimulator = () => {
             <div className="panel-content task-column">
               <TaskDescription 
                 task={exerciseData.taskText} 
-                isCompleted={taskCompleted} 
               />
             </div>
           </Panel>
@@ -187,7 +170,6 @@ const RestApiSimulator = () => {
           <Panel defaultSize={45} minSize={30} className="panel solution-panel">
             <div className="panel-content solution-column">
               <SolutionPanel 
-                onTaskComplete={handleTaskCompletion} 
                 onSendRequest={handleSendRequest} 
               />
             </div>
@@ -229,14 +211,14 @@ const RestApiSimulator = () => {
       </div>
 
       {/* Кнопка перехода к следующему упражнению */}
-      {taskCompleted && (
+
         <div className="next-exercise">
           <button className="next-exercise-button">
             <span>Следующее упражнение</span>
             <ChevronRightIcon className="next-icon" />
           </button>
         </div>
-      )}
+      
     </div>
   );
 };
