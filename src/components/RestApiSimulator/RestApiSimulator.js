@@ -52,25 +52,13 @@ const RestApiSimulator = () => {
             setEtalonsData({ 'users': etalonsTable });
           }
         }
-        
+        debugger
         // Если данные были переданы через навигацию
         if (location.state?.exerciseId) {
           setExerciseData({
             id: location.state.exerciseId,
             title: location.state.exerciseTitle,
-            task: 'Выполните GET запрос для получения данных пользователя с ID 1. Используйте URL /api/users/1'
-          });
-        } else {
-          // Логика загрузки данных по ID
-          console.log('Загрузка данных упражнения для ID:', exerciseId);
-          
-          // Имитация задержки
-          await new Promise(resolve => setTimeout(resolve, 800));
-          
-          // Пример загрузки данных
-          setExerciseData({
-            id: exerciseId,
-            title: `Упражнение ${exerciseId}: REST API`,
+            difficulty: location.state.difficulty,
             task: 'Выполните GET запрос для получения данных пользователя с ID 1. Используйте URL /api/users/1'
           });
         }

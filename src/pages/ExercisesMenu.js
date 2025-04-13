@@ -82,13 +82,15 @@ const ExercisesMenu = () => {
 
   // Функция для обработки клика по кнопке "Начать упражнение"
   const handleStartExercise = (exercise) => {
+    debugger
     // В зависимости от типа упражнения перенаправляем на разные страницы
     if (exercise.type === 'rest-api') {
       // Для REST API перенаправляем на RestApiSimulator с новым путем
       navigate(`/exercises/${categoryId}/apisimulator/${exercise.id}`, { 
         state: { 
           exerciseId: exercise.id,
-          exerciseTitle: exercise.title
+          exerciseTitle: exercise.title,
+          difficulty: exercise.difficulty
         } 
       });
 
