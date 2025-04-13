@@ -33,7 +33,8 @@ const API_REG_USERS = "/register",
       API_GET__TASKS_FROM_TYPE = '/tasks/table/',
       API_GET_ETALONS_USERS = '/etalons/users/',
       API_GET_ETALONS_BOOKS ='/etalons/books/',
-      API_GET_ETALONS_FLIGHTS ='/etalons/flights/';
+      API_GET_ETALONS_FLIGHTS ='/etalons/flights/',
+      API_GET_REST_SIMPLE_RANDOM_TASKS= '/generateSimpleREST/generate';
 
 // Функция для проверки существования email
 export const checkEmailExists = async (email) => {
@@ -126,6 +127,18 @@ export const getEtalonsFlights = async () => {
   try {
     // Используем правильный путь API с параметром типа категории
     const response = await api.get(`${API_GET_ETALONS_FLIGHTS}`);
+    return response.data;
+    
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getRestSimpleRandomTasks = async () => {
+  try {
+    // Используем правильный путь API с параметром типа категории
+    const response = await api.get(`${API_GET_REST_SIMPLE_RANDOM_TASKS}`);
     return response.data;
     
   } catch (error) {

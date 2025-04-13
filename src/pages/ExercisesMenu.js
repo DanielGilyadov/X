@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import './Pages.css';
 import './ExercisesMenu.css'; // Подключаем новый CSS файл
-import { getTablesTasks } from '../services/api';
+import { getTablesTasks, getRestSimpleRandomTasks } from '../services/api';
 import Spinner from '../components/common/Spinner';
 
 const ExercisesMenu = () => {
@@ -27,7 +27,6 @@ const ExercisesMenu = () => {
     }
   };
 
-  // Словарь для определения сложности
   const getDifficultyText = (level) => {
     const difficultyMap = {
       1: 'Легкий',
@@ -92,6 +91,8 @@ const ExercisesMenu = () => {
           exerciseTitle: exercise.title
         } 
       });
+
+
     } else {
       // Для других типов упражнений используем обычный роутинг
       navigate(`/exercises/${categoryId}/${exercise.id}`);
