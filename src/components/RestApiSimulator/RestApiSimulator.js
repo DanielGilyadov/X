@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link, useSearchParams } from 'react-router-dom';
 import { Panel, PanelGroup } from 'react-resizable-panels';
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
+import { ChevronRightIcon, ForwardIcon } from '@heroicons/react/24/outline';
 
 import './RestApiSimulator.css';
 import './EnhancedPanels.css';
@@ -115,30 +115,37 @@ const RestApiSimulator = () => {
     // Здесь может быть дополнительная логика обработки запроса
   };
 
+  // Обработчики для кнопок футера
+  const handleNextExercise = () => {
+    console.log('Переход к следующему упражнению');
+    // Здесь может быть логика перехода к следующему упражнению
+  };
+
+  const handleSkipExercise = () => {
+    console.log('Пропуск упражнения');
+    // Здесь может быть логика пропуска упражнения
+  };
+
   // Показываем спиннер во время загрузки
   if (loading || !exerciseData) {
     return (
-      <div className="page" style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '300px' 
-      }}>
-        <Spinner size="large" text="Загрузка упражнения..." />
+      <div className="fullscreen-page">
+        <div className="loading-container">
+          <Spinner size="large" text="Загрузка упражнения..." />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="page full-width-page">
+    <div className="fullscreen-page">
       {/* Навигационные хлебные крошки */}
       <div className="breadcrumbs">
         <Link to="/exercises">Упражнения</Link>
         <Link to={`/exercises/${categoryId}`}>{getCategoryTitle()}</Link> / {exerciseData.taskText || `task${exerciseId}`}
       </div>
 
-      {/* Основной контейнер симулятора */}
-      <div className="rest-api-simulator panels-container">
+      <div className="simulator-panels">
         <PanelGroup direction="horizontal" className="panel-animation">
           {/* Панель с описанием задания */}
           <Panel defaultSize={25} minSize={15} className="panel task-panel">
@@ -191,14 +198,21 @@ const RestApiSimulator = () => {
             </div>
           </Panel>
         </PanelGroup>
-        <div className="next-exercise">
-          <button className="next-exercise-button">
+      </div>
+        
+      {/* Футер с кнопками навигации */}
+      <div className="simulator-footer">
+        <div className="footer-container">
+          <button className="skip-button" onClick={handleSkipExercise}>
+            <span>Пропустить</span>
+            <ForwardIcon className="skip-icon" />
+          </button>
+          <button className="next-exercise-button" onClick={handleNextExercise}>
             <span>Следующее упражнение</span>
             <ChevronRightIcon className="next-icon" />
           </button>
         </div>
       </div>
-      
     </div>
   );
 };

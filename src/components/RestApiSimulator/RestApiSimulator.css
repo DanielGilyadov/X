@@ -22,80 +22,140 @@
   --border-radius-lg: 0.75rem;
   --transition-fast: 0.15s ease;
   --transition-normal: 0.3s ease;
+  --footer-height: 70px;
 }
 
-/* Основной контейнер */
-.full-width-page {
-  max-width: 100%;
-  padding: 1.5rem;
-  min-height: calc(100vh - 70px);
+/* Глобальные исправления для устранения горизонтального скролла */
+body {
+  overflow-x: hidden;
+}
+
+/* Полноэкранный контейнер на всю страницу */
+.fullscreen-page {
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Заменено с 100vw на 100% */
+  min-height: calc(100vh - 70px); /* Высота минус навбар */
   display: flex;
   flex-direction: column;
-  background-color: var(--background-color);
-}
-
-.rest-api-simulator {
+  position: relative;
   background-color: var(--surface-color);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 1rem;
+  overflow-x: hidden; /* Добавлено для предотвращения горизонтального скролла */
+}
+
+/* Контейнер для загрузки */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+}
+
+/* Панели симулятора */
+.simulator-panels {
   flex: 1;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding: 0 1.5rem;
+  margin-bottom: var(--footer-height); /* Оставляем место для футера */
+}
+
+/* Футер с кнопками */
+.simulator-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--footer-height);
+  background-color: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  z-index: 1000;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  width: 100%; /* Добавлена явная ширина */
+}
+
+.footer-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+}
+
+/* Кнопка следующего упражнения */
+.next-exercise-button {
+  display: flex;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.next-exercise-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.next-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+/* Кнопка пропуска упражнения */
+.skip-button {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.skip-button:hover {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+}
+
+.skip-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: 0.5rem;
+}
+
+/* Стили для панелей */
+.panel {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-md);
   overflow: hidden;
 }
 
-/* Стили для успешного выполнения задания */
-.success-notification {
-  background-color: rgba(16, 185, 129, 0.1);
-  border-left: 4px solid var(--success-color);
-  color: #065f46;
-  padding: 0.75rem 1rem;
-  border-radius: var(--border-radius-md);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  animation: slideIn 0.5s ease-out;
-  position: relative;
+.panel-content {
+  height: 100%;
+  overflow: auto;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.success-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.75rem;
-  background-color: var(--success-color);
-  color: white;
-  padding: 0.25rem;
-  border-radius: 50%;
-}
-
-.close-notification {
-  background: none;
-  border: none;
-  color: #065f46;
-  font-size: 1.25rem;
-  cursor: pointer;
-  position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.7;
-  transition: opacity var(--transition-fast);
-}
-
-.close-notification:hover {
-  opacity: 1;
+.task-column,
+.solution-column,
+.data-column {
+  padding: 1rem;
+  height: 100%;
 }
 
 /* Стили для разделителей панелей */
@@ -113,55 +173,25 @@
   background-color: var(--primary-light);
 }
 
-.handle-line {
-  width: 2px;
-  height: 2rem;
-  background-color: var(--border-color);
-}
-
-.panel-resize-handle:hover .handle-line {
-  background-color: white;
-}
-
-/* Стили для панелей */
-.task-column,
-.solution-column,
-.data-column {
-  padding: 1rem;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-}
-
-/* Улучшенные стили для подсказки */
-.task-hint {
-  margin-top: 1.5rem;
-  background-color: #fffbeb;
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  border: 1px solid #fef3c7;
-  transition: all var(--transition-normal);
-}
-
-.task-hint-header {
+/* Улучшенные стили для хлебных крошек */
+.breadcrumbs {
+  padding: 1.25rem 1.5rem 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 0.75rem 1rem;
-  background-color: #fef3c7;
-  color: #92400e;
-  font-weight: 600;
 }
 
-.hint-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 0.5rem;
+.breadcrumbs a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
-.task-hint-content {
-  padding: 1rem;
-  color: #92400e;
-  font-size: 0.9375rem;
+.breadcrumbs a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
 }
 
 /* Улучшенные стили для базы данных */
@@ -217,68 +247,24 @@
   padding: 1rem;
 }
 
-/* Стили для кнопки следующего упражнения */
-.next-exercise {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: center;
-}
-
-.next-exercise-button {
-  display: flex;
-  align-items: center;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius-md);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: var(--shadow-md);
-}
-
-.next-exercise-button:hover {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.next-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-left: 0.5rem;
-}
-
-/* Улучшенные стили для хлебных крошек */
-.breadcrumbs {
-  margin-bottom: 1.25rem;
-  font-size: 0.875rem;
-  color: var(--text-tertiary);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.breadcrumbs a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-.breadcrumbs a:hover {
-  color: var(--primary-dark);
-  text-decoration: underline;
-}
-
 /* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
-  .full-width-page {
-    padding: 1rem;
+  .simulator-panels {
+    padding: 0 1rem;
   }
   
-  .rest-api-simulator {
-    padding: 0.75rem;
+  .breadcrumbs {
+    padding: 1rem 1rem 0.5rem;
+  }
+  
+  .footer-container {
+    padding: 0 1rem;
+  }
+  
+  .next-exercise-button,
+  .skip-button {
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
   }
   
   .task-column,
