@@ -79,7 +79,7 @@ const ExercisesMenu = () => {
     if (type === 'rests') {
       path = `/exercises/${categoryId}/apisimulator/${id}?difficulty=${difficultyString}`
     } else if (type === 'messageBrockers') {
-      path = `/exercises/${categoryId}/messageBrockersSim`
+      path = `/exercises/${categoryId}/messagebrockerssimulator/${id}?difficulty=${difficultyString}`
     }
     navigate(path, { state: { exerciseId: id, exerciseTitle: title, difficulty } });
   };

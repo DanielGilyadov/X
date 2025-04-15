@@ -13,6 +13,7 @@ import './App.css';
 import RestApiSimulator from './components/RestApiSimulator/RestApiSimulator';
 import { AuthProvider } from './context/AuthContext';
 import { SpinnerProvider } from './context/SpinnerContext';
+import Mbsimulator from './components/MessageBrockerSimulator/Mbsimulator';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/subscription" element={<Subscription />} />
                 <Route path="/exercises/:categoryId/apisimulator/:exerciseId" element={<RestApiSimulator />} />
+                <Route path="/exercises/:categoryId/messagebrockerssimulator/:exerciseId" element={<Mbsimulator />} />
               </Routes>
             </div>
           </div>
