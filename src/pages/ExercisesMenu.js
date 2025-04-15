@@ -48,14 +48,16 @@ const ExercisesMenu = () => {
       setLoading(true);
       try {
         const response = await getTablesTasks(categoryId);
+        console.log(response)
+
         const formatted = Array.isArray(response)
           ? response.map(({ id, taskName, taskDescription, taskDifficulty }) => ({
-              id,
-              title: taskName,
-              description: taskDescription,
-              difficulty: taskDifficulty,
-              type: 'rest-api'
-            }))
+            id,
+            title: taskName,
+            description: taskDescription,
+            difficulty: taskDifficulty,
+            type: categoryId
+          }))
           : [];
 
         setExercises(formatted);
@@ -73,12 +75,15 @@ const ExercisesMenu = () => {
   }, [categoryId]);
 
   const handleStartExercise = ({ id, title, difficulty, type }) => {
-    const difficultyString = difficultyMap[difficulty]; // 💡 исправление тут
-  
-    const path = type === 'rest-api'
-      ? `/exercises/${categoryId}/apisimulator/${id}?difficulty=${difficultyString}`
-      : `/exercises/${categoryId}/${id}`;
-  
+    const difficultyString = difficultyMap[difficulty];
+
+    let path;
+    if (type === 'rests') {
+      path = `/exercises/${categoryId}/apisimulator/${id}?difficulty=${difficultyString}`
+    } else if (type === 'messageBrockers') {
+      path = `/exercises/${categoryId}/messageBrockersSim`
+    }
+
     navigate(path, { state: { exerciseId: id, exerciseTitle: title, difficulty } });
   };
 
