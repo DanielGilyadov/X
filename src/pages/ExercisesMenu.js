@@ -6,7 +6,6 @@ import './ExercisesMenu.css';
 import { getTablesTasks } from '../services/api';
 import Spinner from '../components/common/Spinner';
 
-// --- Вспомогательные функции ---
 const categoryTitles = {
   rests: 'REST интеграции',
   messageBrockers: 'SQL запросы',
@@ -76,14 +75,12 @@ const ExercisesMenu = () => {
 
   const handleStartExercise = ({ id, title, difficulty, type }) => {
     const difficultyString = difficultyMap[difficulty];
-
     let path;
     if (type === 'rests') {
       path = `/exercises/${categoryId}/apisimulator/${id}?difficulty=${difficultyString}`
     } else if (type === 'messageBrockers') {
       path = `/exercises/${categoryId}/messageBrockersSim`
     }
-
     navigate(path, { state: { exerciseId: id, exerciseTitle: title, difficulty } });
   };
 
@@ -130,7 +127,6 @@ const ExercisesMenu = () => {
           ))
         ) : (
           <div className="no-exercises">
-            <div className="no-exercises-icon">📋</div>
             <div className="no-exercises-message">
               Упражнения для данной категории не найдены.
             </div>
